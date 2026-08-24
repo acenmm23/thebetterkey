@@ -7,6 +7,7 @@ import './scroll-effects.css'
 import './hero-motion.css'
 import './hero-handoff.js'
 import './demo-refresh.css'
+import './brand-motion.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
