@@ -53,71 +53,49 @@ function LockDemo() {
 
   return (
     <>
-      <div className={`demo-stage ${locked ? 'is-locked' : 'is-unlocked'}`}>
+      <div className={`demo-stage edge-demo ${locked ? 'is-locked' : 'is-unlocked'}`}>
         <span className="demo-meta demo-side-left">OUTSIDE</span>
         <span className="demo-meta demo-side-right">INSIDE</span>
 
-        <div className="door-plane" aria-hidden="true">
-          <div className="door-edge" />
-          <div className="bolt" />
-        </div>
-
         <div className="demo-label demo-label-key">
           <span className="demo-label-index">01</span>
-          <div>
-            <strong>Your key</strong>
-            <p>Button built into the key head.</p>
-          </div>
+          <div><strong>Your key</strong><p>Same physical key. One added button.</p></div>
         </div>
-
         <div className="demo-label demo-label-device">
           <span className="demo-label-index">02</span>
-          <div>
-            <strong>Your deadbolt</strong>
-            <p>Retrofit mounts over the inside thumb-turn.</p>
-          </div>
+          <div><strong>BetterKey inside</strong><p>Retrofits over the deadbolt you already have.</p></div>
         </div>
 
-        <div className="signal-link" aria-hidden="true">
-          <span className="signal-dot signal-dot-a" />
-          <span className="signal-dot signal-dot-b" />
-          <span className="signal-dot signal-dot-c" />
-        </div>
-
-        <div className="device-wrap">
-          <div className="device-shadow" />
-          <div className="device">
-            <span className="device-mark">thebetterkey</span>
-            <div className="thumbturn">
-              <span className="thumbturn-bar" />
+        <div className="door-edge-scene">
+          <div className="scene-side scene-outside">
+            <img className="outside-cylinder" src={deadboltImg} alt="Existing exterior deadbolt" />
+            <div className="outside-key-wrap">
+              <img className="outside-key" src={betterKeyKey} alt="BetterKey key with built-in button" />
+              <button className="key-button-hotspot" onClick={() => setLocked(v => !v)} aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}><span className="key-button-pulse" /></button>
             </div>
-            <span className="device-status"><i /> {status}</span>
+            <div className="press-callout"><span className="eyebrow">PRESS</span><strong>{locked ? 'Unlock on the way' : 'Locked back up'}</strong></div>
           </div>
-        </div>
 
-        <div className="key-demo-card">
-          <div className="fob-copy">
-            <span className="eyebrow">PRESS HERE</span>
-            <strong>{locked ? 'Unlock before you reach the door.' : 'Press again to lock it back.'}</strong>
-            <small>Same key. Added button.</small>
+          <div className="door-spine" aria-hidden="true">
+            <div className="latch-plate">
+              <span className="latch-screw latch-screw-top" />
+              <span className="latch-screw latch-screw-bottom" />
+              <div className="latch-bolt" />
+            </div>
           </div>
-          <div className="interactive-key-wrap">
-            <img className="interactive-key" src={betterKeyKey} alt="BetterKey key with built-in button" />
-            <button
-              className="key-button-hotspot"
-              onClick={() => setLocked(v => !v)}
-              aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}
-            >
-              <span className="key-button-pulse" />
-            </button>
+
+          <div className="scene-side scene-inside">
+            <div className="edge-device-wrap">
+              <div className="device-shadow" />
+              <div className="edge-device">
+                <span className="device-mark">thebetterkey</span>
+                <span className="device-status"><i /> {status}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="demo-footer-note">
-        <span className="eyebrow">THE POINT</span>
-        <p>Keeps your physical key. Makes the keyway optional.</p>
-      </div>
+      <div className="demo-footer-note"><span className="eyebrow">THE POINT</span><p>Press the key. BetterKey turns the deadbolt from inside. Your normal key still works.</p></div>
     </>
   )
 }
@@ -126,14 +104,12 @@ function Hero() {
   return (
     <section className="hero shell" id="top">
       <div className="hero-kicker reveal">A better way through the front door.</div>
-      <h1 className="display hero-title reveal reveal-delay-1">
-        Your front door<br/>should work<br/><em>like your car.</em>
-      </h1>
+      <h1 className="display hero-title reveal reveal-delay-1">Your front door<br/>should work<br/><em>like your car.</em></h1>
       <div className="hero-clarity reveal reveal-delay-2">
         <div className="hero-clarity-copy">
           <span className="eyebrow">HOW IT WORKS</span>
           <h2>A button on your key.<br/>A motor on your deadbolt.</h2>
-          <p>BetterKey adds a button to the key you already carry and retrofits over the deadbolt you already have. Press to unlock. Your key still works normally.</p>
+          <p>BetterKey adds a button to the key you already carry and retrofits over the inside of the deadbolt you already have. Press to unlock. Your key still works normally.</p>
         </div>
         <a href="#why" className="text-link">Why it matters <ArrowDown size={16}/></a>
       </div>
@@ -152,40 +128,37 @@ function WhyBetterKey() {
           <p>BetterKey keeps the physical key you already trust and adds another way in: press the button while you are approaching, then open the door when you get there.</p>
         </div>
       </div>
-
       <div className="approach-panel">
         <span className="eyebrow light">THE DIFFERENCE</span>
-        <div className="approach-message">
-          <span>Unlock on the way.</span>
-          <strong>Not at the door.</strong>
-        </div>
-        <div className="approach-flow" aria-label="Approach, press, then open">
-          <span>Approaching</span><i>→</i><span className="approach-accent">Press</span><i>→</i><span>Open</span>
-        </div>
+        <div className="approach-message"><span>Unlock on the way.</span><strong>Not at the door.</strong></div>
+        <div className="approach-flow"><span>Approaching</span><i>→</i><span className="approach-accent">Press</span><i>→</i><span>Open</span></div>
         <p>Your physical key still works exactly like a physical key.</p>
       </div>
-
       <div className="value-split">
-        <article className="value-case">
-          <span className="eyebrow">FOR MOST PEOPLE</span>
-          <h3>A little easier.<br/><em>Every single day.</em></h3>
-          <p>Not life-changing. Just nicer. Press while you are walking up, and when you reach the door, it is already unlocked.</p>
-        </article>
-        <article className="value-case">
-          <span className="eyebrow">FOR SOME PEOPLE</span>
-          <h3>That same small change<br/><em>can mean a lot more.</em></h3>
-          <p>For anyone who finds gripping or twisting a key difficult, pressing a button can make everyday entry meaningfully easier.</p>
-        </article>
+        <article className="value-case"><span className="eyebrow">FOR MOST PEOPLE</span><h3>A little easier.<br/><em>Every single day.</em></h3><p>Not life-changing. Just nicer. Press while you are walking up, and when you reach the door, it is already unlocked.</p></article>
+        <article className="value-case"><span className="eyebrow">FOR SOME PEOPLE</span><h3>That same small change<br/><em>can mean a lot more.</em></h3><p>For anyone who finds gripping or twisting a key difficult, pressing a button can make everyday entry meaningfully easier.</p></article>
       </div>
+      <div className="situational-note"><span className="eyebrow">AND SOMETIMES</span><p><strong>A button is simply easier.</strong> In the dark, in the cold, with gloves on, or in moments where a keyway asks for more precision than a press.</p></div>
+      <div className="why-statement"><div><span>Keep the key.</span> <strong>Add the option.</strong></div><p>Use whichever makes sense in the moment. Nothing about normal key entry goes away.</p></div>
+    </section>
+  )
+}
 
-      <div className="situational-note">
-        <span className="eyebrow">AND SOMETIMES</span>
-        <p><strong>A button is simply easier.</strong> In the dark, in the cold, with gloves on, or in the kinds of moments where a keyway asks for more precision than a press.</p>
-      </div>
-
-      <div className="why-statement">
-        <div><span>Keep the key.</span> <strong>Add the option.</strong></div>
-        <p>Use whichever makes sense in the moment. Nothing about normal key entry goes away.</p>
+function AntiSmartLock() {
+  return (
+    <section className="anti-smart">
+      <div className="shell anti-smart-inner">
+        <span className="eyebrow light">OUR TAKE ON SMART LOCKS</span>
+        <h2>Your front door<br/><em>doesn’t need a login.</em></h2>
+        <div className="anti-smart-grid">
+          <div className="anti-smart-list"><span>No app.</span><span>No Wi-Fi.</span><span>No cloud.</span><span>No replacement lock.</span></div>
+          <div className="anti-smart-copy">
+            <p>A smart lock can mean a new lock, an app, an account, cloud services, or putting your phone in the middle of getting home. We wanted the useful part without dragging the whole smart home along with it.</p>
+            <strong>The convenience of a smart lock.<br/>Without the smart-home baggage.</strong>
+            <div className="anti-smart-tag">We kept the useful part.</div>
+            <small>Core access stays dedicated and local. Your physical key remains available whenever you want it.</small>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -200,145 +173,33 @@ const pillars = [
 function HowItWorks() {
   return (
     <section className="section shell" id="how">
-      <div className="section-head">
-        <span className="eyebrow">THE IDEA</span>
-        <h2 className="section-title">Smart-home ease.<br/>Without the smart-home ritual.</h2>
-      </div>
+      <div className="section-head"><span className="eyebrow">THE IDEA</span><h2 className="section-title">Smart-home ease.<br/>Without the smart-home ritual.</h2></div>
       <div className="pillars">
-        {pillars.map(({image, imageClass, graphic, index, title, copy}) => (
-          <article className="pillar" key={index}>
-            <div className="pillar-top"><span>{index}</span></div>
-            <div className="pillar-visual">
-              {graphic === 'no-cloud' ? <NoCloudGraphic /> : <img src={image} alt="" className={imageClass} aria-hidden="true" />}
-            </div>
-            <div>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </div>
-          </article>
-        ))}
+        {pillars.map(({image, imageClass, graphic, index, title, copy}) => <article className="pillar" key={index}><div className="pillar-top"><span>{index}</span></div><div className="pillar-visual">{graphic === 'no-cloud' ? <NoCloudGraphic /> : <img src={image} alt="" className={imageClass} aria-hidden="true" />}</div><div><h3>{title}</h3><p>{copy}</p></div></article>)}
       </div>
     </section>
   )
 }
 
 function Manifesto() {
-  return (
-    <section className="manifesto">
-      <div className="shell manifesto-inner">
-        <span className="eyebrow light">WHY</span>
-        <p className="manifesto-copy">
-          Opening your home should be <span>boring.</span><br/>
-          Fast. Physical. Reliable.<br/>
-          <i>One press and you’re in.</i>
-        </p>
-      </div>
-    </section>
-  )
+  return <section className="manifesto"><div className="shell manifesto-inner"><span className="eyebrow light">WHY</span><p className="manifesto-copy">Opening your home should be <span>boring.</span><br/>Fast. Physical. Reliable.<br/><i>One press and you’re in.</i></p></div></section>
 }
 
 function BuildStory() {
   return (
-    <section className="section shell build" id="build">
-      <div className="build-grid">
-        <div className="build-copy">
-          <span className="eyebrow">BUILDING IN PUBLIC</span>
-          <h2 className="section-title">Not a render.<br/>A product in progress.</h2>
-          <p>theBetterKey is being designed, printed, wired, broken, rebuilt, and tested in public. Follow the messy part, not just the launch photos.</p>
-          <a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer" className="outline-link">
-            Follow the build <ArrowRight size={15}/>
-          </a>
-        </div>
-
-        <div className="build-board" aria-label="Build progress collage">
-          <div className="build-card build-card-a">
-            <span className="mono-label">V1 / MECHANISM</span>
-            <div className="prototype-sketch">
-              <div className="sketch-device"><span/></div>
-              <div className="dimension d1">65 mm</div>
-              <div className="dimension d2">motor</div>
-            </div>
-            <p>Make it move.</p>
-          </div>
-          <div className="build-card build-card-b">
-            <span className="mono-label">V2 / ELECTRONICS</span>
-            <div className="pcb-art">
-              <span className="chip chip-main">MCU</span>
-              <span className="chip chip-driver">DRV</span>
-              <i className="trace t1"/><i className="trace t2"/><i className="trace t3"/><i className="trace t4"/>
-            </div>
-            <p>Shrink it down.</p>
-          </div>
-          <div className="build-card build-card-c">
-            <span className="mono-label">NEXT / PRODUCT</span>
-            <div className="future-device"><span>thebetterkey</span><i/></div>
-            <p>Then make it beautiful.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section className="section shell build" id="build"><div className="build-grid"><div className="build-copy"><span className="eyebrow">BUILDING IN PUBLIC</span><h2 className="section-title">Not a render.<br/>A product in progress.</h2><p>theBetterKey is being designed, printed, wired, broken, rebuilt, and tested in public. Follow the messy part, not just the launch photos.</p><a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer" className="outline-link">Follow the build <ArrowRight size={15}/></a></div><div className="build-board" aria-label="Build progress collage"><div className="build-card build-card-a"><span className="mono-label">V1 / MECHANISM</span><div className="prototype-sketch"><div className="sketch-device"><span/></div><div className="dimension d1">65 mm</div><div className="dimension d2">motor</div></div><p>Make it move.</p></div><div className="build-card build-card-b"><span className="mono-label">V2 / ELECTRONICS</span><div className="pcb-art"><span className="chip chip-main">MCU</span><span className="chip chip-driver">DRV</span><i className="trace t1"/><i className="trace t2"/><i className="trace t3"/><i className="trace t4"/></div><p>Shrink it down.</p></div><div className="build-card build-card-c"><span className="mono-label">NEXT / PRODUCT</span><div className="future-device"><span>thebetterkey</span><i/></div><p>Then make it beautiful.</p></div></div></div></section>
   )
 }
 
 function Waitlist() {
   const [email, setEmail] = useState('')
   const formUrl = useMemo(() => WAITLIST_URL, [])
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    if (email.trim()) navigator.clipboard?.writeText(email.trim()).catch(() => {})
-    window.open(formUrl, '_blank', 'noopener,noreferrer')
-  }
-
-  return (
-    <section className="waitlist" id="waitlist">
-      <div className="shell waitlist-inner">
-        <div>
-          <span className="eyebrow light">EARLY ACCESS</span>
-          <h2>Be first<br/>through the door.</h2>
-        </div>
-        <div className="waitlist-right">
-          <p>Join the list for prototype updates, early testing, and first access when theBetterKey is ready.</p>
-          <form onSubmit={handleSubmit}>
-            <label className="sr-only" htmlFor="email">Email address</label>
-            <input id="email" type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com"/>
-            <button type="submit">Join waitlist <ArrowRight size={17}/></button>
-          </form>
-          <small>For now this opens the current waitlist form. We’ll connect true one-step signup next.</small>
-        </div>
-      </div>
-    </section>
-  )
+  function handleSubmit(e) { e.preventDefault(); if (email.trim()) navigator.clipboard?.writeText(email.trim()).catch(() => {}); window.open(formUrl, '_blank', 'noopener,noreferrer') }
+  return <section className="waitlist" id="waitlist"><div className="shell waitlist-inner"><div><span className="eyebrow light">EARLY ACCESS</span><h2>Be first<br/>through the door.</h2></div><div className="waitlist-right"><p>Join the list for prototype updates, early testing, and first access when theBetterKey is ready.</p><form onSubmit={handleSubmit}><label className="sr-only" htmlFor="email">Email address</label><input id="email" type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com"/><button type="submit">Join waitlist <ArrowRight size={17}/></button></form><small>For now this opens the current waitlist form. We’ll connect true one-step signup next.</small></div></div></section>
 }
 
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="shell footer-inner">
-        <a href="#top" className="brand footer-brand">thebetterkey</a>
-        <div className="footer-meta">
-          <span>Built in Santa Cruz, CA</span>
-          <a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer">Instagram</a>
-          <span>© {new Date().getFullYear()}</span>
-        </div>
-      </div>
-    </footer>
-  )
-}
+function Footer() { return <footer className="footer"><div className="shell footer-inner"><a href="#top" className="brand footer-brand">thebetterkey</a><div className="footer-meta"><span>Built in Santa Cruz, CA</span><a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer">Instagram</a><span>© {new Date().getFullYear()}</span></div></div></footer> }
 
 export default function App() {
-  return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <WhyBetterKey />
-        <HowItWorks />
-        <Manifesto />
-        <BuildStory />
-        <Waitlist />
-      </main>
-      <Footer />
-    </>
-  )
+  return <><Nav/><main><Hero/><WhyBetterKey/><AntiSmartLock/><HowItWorks/><Manifesto/><BuildStory/><Waitlist/></main><Footer/></>
 }
