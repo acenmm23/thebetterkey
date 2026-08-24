@@ -6,6 +6,7 @@ import './product-refresh.css'
 import './scroll-effects.css'
 import './hero-motion.css'
 import './hero-handoff.js'
+import './demo-refresh.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
