@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, Instagram, LockKeyhole, Radio, WifiOff, Wrench } from 'lucide-react'
+import { ArrowDown, ArrowRight, LockKeyhole, Radio, WifiOff, Wrench } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 const WAITLIST_URL = 'https://forms.gle/jDQy3swL2g5gwGGq8'
@@ -124,7 +124,7 @@ function BuildStory() {
           <h2 className="section-title">Not a render.<br/>A product in progress.</h2>
           <p>theBetterKey is being designed, printed, wired, broken, rebuilt, and tested in public. Follow the messy part, not just the launch photos.</p>
           <a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer" className="outline-link">
-            <Instagram size={17} strokeWidth={1.7}/> Follow the build <ArrowRight size={15}/>
+           Follow the build <ArrowRight size={15}/>
           </a>
         </div>
 
