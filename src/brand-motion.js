@@ -16,9 +16,8 @@ function stickySectionProgress(section) {
   const vh = Math.max(1, window.innerHeight)
   const scrollableDistance = Math.max(1, section.offsetHeight - vh)
 
-  // Start only once the black section has substantially arrived, then use the
-  // section's actual scrollable distance. This keeps laptop and monitor timing
-  // proportional instead of tying it to fixed pixels or browser view-timeline quirks.
+  // Use the section's real scrollable distance so pacing stays proportional
+  // across laptop and monitor heights instead of depending on fixed pixels.
   const startOffset = vh * 0.16
   const travelled = startOffset - rect.top
   const total = scrollableDistance + startOffset
@@ -61,9 +60,9 @@ export function initBrandMotion() {
 
   const updateApproach = () => {
     if (!approachPanel || approachWords.length < 3) return
-    const p = sectionProgress(approachPanel, 0.80, 0.28)
+    // About 20% less scroll travel than before.
+    const p = sectionProgress(approachPanel, 0.80, 0.38)
 
-    // Snap one pill between the three steps. No gradual fill.
     const activeIndex = p < 0.34 ? 0 : p < 0.67 ? 1 : 2
 
     approachWords.forEach((word, index) => {
@@ -74,9 +73,9 @@ export function initBrandMotion() {
 
   const updateWhyStatement = () => {
     if (!whyStatement || !keepPhrase || !addPhrase) return
-    const p = sectionProgress(whyStatement, 0.82, 0.38)
+    // Same binary snap, reached with about 20% less scroll travel.
+    const p = sectionProgress(whyStatement, 0.82, 0.47)
 
-    // A binary handoff, matching the existing rectangular highlighter style.
     const showAddOption = p >= 0.50
     keepPhrase.classList.toggle('is-motion-active', !showAddOption)
     addPhrase.classList.toggle('is-motion-active', showAddOption)
@@ -86,8 +85,6 @@ export function initBrandMotion() {
     if (!antiSection || antiPills.length === 0) return
     const p = stickySectionProgress(antiSection)
 
-    // Spread the cumulative sequence almost across the entire sticky travel.
-    // These are normalized fractions of real section travel, not screen-specific pixels.
     const thresholds = [0.08, 0.27, 0.46, 0.65, 0.84]
     antiPills.forEach((pill, index) => {
       pill.classList.toggle('is-motion-lit', p >= thresholds[index])
