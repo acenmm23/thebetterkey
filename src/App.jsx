@@ -52,40 +52,73 @@ function LockDemo() {
   const status = locked ? 'Locked' : 'Unlocked'
 
   return (
-    <div className={`demo-stage ${locked ? 'is-locked' : 'is-unlocked'}`}>
-      <div className="door-plane" aria-hidden="true">
-        <div className="door-edge" />
-        <div className="bolt" />
-      </div>
+    <>
+      <div className={`demo-stage ${locked ? 'is-locked' : 'is-unlocked'}`}>
+        <span className="demo-meta demo-side-left">OUTSIDE</span>
+        <span className="demo-meta demo-side-right">INSIDE</span>
 
-      <div className="device-wrap">
-        <div className="device-shadow" />
-        <div className="device">
-          <span className="device-mark">thebetterkey</span>
-          <div className="thumbturn">
-            <span className="thumbturn-bar" />
+        <div className="door-plane" aria-hidden="true">
+          <div className="door-edge" />
+          <div className="bolt" />
+        </div>
+
+        <div className="demo-label demo-label-key">
+          <span className="demo-label-index">01</span>
+          <div>
+            <strong>Your key</strong>
+            <p>Button built into the key head.</p>
           </div>
-          <span className="device-status"><i /> {status}</span>
+        </div>
+
+        <div className="demo-label demo-label-device">
+          <span className="demo-label-index">02</span>
+          <div>
+            <strong>Your deadbolt</strong>
+            <p>Retrofit mounts over the inside thumb-turn.</p>
+          </div>
+        </div>
+
+        <div className="signal-link" aria-hidden="true">
+          <span className="signal-dot signal-dot-a" />
+          <span className="signal-dot signal-dot-b" />
+          <span className="signal-dot signal-dot-c" />
+        </div>
+
+        <div className="device-wrap">
+          <div className="device-shadow" />
+          <div className="device">
+            <span className="device-mark">thebetterkey</span>
+            <div className="thumbturn">
+              <span className="thumbturn-bar" />
+            </div>
+            <span className="device-status"><i /> {status}</span>
+          </div>
+        </div>
+
+        <div className="key-demo-card">
+          <div className="fob-copy">
+            <span className="eyebrow">PRESS HERE</span>
+            <strong>{locked ? 'Unlock before you reach the door.' : 'Press again to lock it back.'}</strong>
+            <small>Same key. Added button.</small>
+          </div>
+          <div className="interactive-key-wrap">
+            <img className="interactive-key" src={betterKeyKey} alt="BetterKey key with built-in button" />
+            <button
+              className="key-button-hotspot"
+              onClick={() => setLocked(v => !v)}
+              aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}
+            >
+              <span className="key-button-pulse" />
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="key-demo-card">
-        <div className="fob-copy">
-          <span className="eyebrow">TRY IT</span>
-          <strong>{locked ? 'Press the key button to unlock' : 'Press the key button to lock'}</strong>
-        </div>
-        <div className="interactive-key-wrap">
-          <img className="interactive-key" src={betterKeyKey} alt="BetterKey leather key fob" />
-          <button
-            className="key-button-hotspot"
-            onClick={() => setLocked(v => !v)}
-            aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}
-          >
-            <span className="key-button-pulse" />
-          </button>
-        </div>
+      <div className="demo-footer-note">
+        <span className="eyebrow">THE POINT</span>
+        <p>Keeps your physical key. Makes the keyway optional.</p>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -96,8 +129,12 @@ function Hero() {
       <h1 className="display hero-title reveal reveal-delay-1">
         Your front door<br/>should work<br/><em>like your car.</em>
       </h1>
-      <div className="hero-bottom reveal reveal-delay-2">
-        <p><strong>Press before you reach the door.</strong><span>Open it when you get there. Your existing deadbolt. Your physical key. One easier way in.</span></p>
+      <div className="hero-clarity reveal reveal-delay-2">
+        <div className="hero-clarity-copy">
+          <span className="eyebrow">HOW IT WORKS</span>
+          <h2>A button on your key.<br/>A motor on your deadbolt.</h2>
+          <p>BetterKey adds a button to the key you already carry and retrofits over the deadbolt you already have. Press to unlock. Your key still works normally.</p>
+        </div>
         <a href="#why" className="text-link">Why it matters <ArrowDown size={16}/></a>
       </div>
       <LockDemo />
