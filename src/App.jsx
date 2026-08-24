@@ -52,51 +52,39 @@ function LockDemo() {
   const status = locked ? 'Locked' : 'Unlocked'
 
   return (
-    <>
-      <div className={`demo-stage edge-demo ${locked ? 'is-locked' : 'is-unlocked'}`}>
-        <span className="demo-meta demo-side-left">OUTSIDE</span>
-        <span className="demo-meta demo-side-right">INSIDE</span>
+    <div className={`compact-demo ${locked ? 'is-locked' : 'is-unlocked'}`}>
+      <div className="compact-demo-copy">
+        <span className="eyebrow">TRY IT</span>
+        <h3>Press the key.<br/>Deadbolt turns.</h3>
+        <p>No app in the middle. No fake door diagram either.</p>
+      </div>
 
-        <div className="demo-label demo-label-key">
-          <span className="demo-label-index">01</span>
-          <div><strong>Your key</strong><p>Same physical key. One added button.</p></div>
+      <div className="compact-key-zone">
+        <span className="compact-object-label">YOUR KEY</span>
+        <button className="demo-key-hit" onClick={() => setLocked(v => !v)} aria-label={locked ? 'Unlock with BetterKey' : 'Lock with BetterKey'}>
+          <img src={betterKeyKey} alt="BetterKey key with built-in button" />
+        </button>
+        <span className="click-nudge">CLICK THE BUTTON ↑</span>
+      </div>
+
+      <div className="compact-motion" aria-hidden="true">
+        <span />
+        <i />
+        <span />
+      </div>
+
+      <div className="compact-lock-zone">
+        <span className="compact-object-label">YOUR DEADBOLT</span>
+        <div className="compact-device-shell">
+          <span className="compact-device-logo">thebetterkey</span>
+          <div className="compact-device-state"><i /> {status}</div>
         </div>
-        <div className="demo-label demo-label-device">
-          <span className="demo-label-index">02</span>
-          <div><strong>BetterKey inside</strong><p>Retrofits over the deadbolt you already have.</p></div>
-        </div>
-
-        <div className="door-edge-scene">
-          <div className="scene-side scene-outside">
-            <img className="outside-cylinder" src={deadboltImg} alt="Existing exterior deadbolt" />
-            <div className="outside-key-wrap">
-              <img className="outside-key" src={betterKeyKey} alt="BetterKey key with built-in button" />
-              <button className="key-button-hotspot" onClick={() => setLocked(v => !v)} aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}><span className="key-button-pulse" /></button>
-            </div>
-            <div className="press-callout"><span className="eyebrow">PRESS</span><strong>{locked ? 'Unlock on the way' : 'Locked back up'}</strong></div>
-          </div>
-
-          <div className="door-spine" aria-hidden="true">
-            <div className="latch-plate">
-              <span className="latch-screw latch-screw-top" />
-              <span className="latch-screw latch-screw-bottom" />
-              <div className="latch-bolt" />
-            </div>
-          </div>
-
-          <div className="scene-side scene-inside">
-            <div className="edge-device-wrap">
-              <div className="device-shadow" />
-              <div className="edge-device">
-                <span className="device-mark">thebetterkey</span>
-                <span className="device-status"><i /> {status}</span>
-              </div>
-            </div>
-          </div>
+        <div className="bolt-status" aria-hidden="true">
+          <span className="bolt-track"><i /></span>
+          <span className="bolt-copy">{locked ? 'bolt extended' : 'bolt retracted'}</span>
         </div>
       </div>
-      <div className="demo-footer-note"><span className="eyebrow">THE POINT</span><p>Press the key. BetterKey turns the deadbolt from inside. Your normal key still works.</p></div>
-    </>
+    </div>
   )
 }
 
@@ -107,9 +95,9 @@ function Hero() {
       <h1 className="display hero-title reveal reveal-delay-1">Your front door<br/>should work<br/><em>like your car.</em></h1>
       <div className="hero-clarity reveal reveal-delay-2">
         <div className="hero-clarity-copy">
-          <span className="eyebrow">HOW IT WORKS</span>
+          <span className="eyebrow">THE PRODUCT</span>
           <h2>A button on your key.<br/>A motor on your deadbolt.</h2>
-          <p>BetterKey adds a button to the key you already carry and retrofits over the inside of the deadbolt you already have. Press to unlock. Your key still works normally.</p>
+          <p>Press while you are walking up. BetterKey turns the deadbolt you already have. No phone. No Wi-Fi. No subscription. Your physical key still works normally.</p>
         </div>
         <a href="#why" className="text-link">Why it matters <ArrowDown size={16}/></a>
       </div>
@@ -148,15 +136,26 @@ function AntiSmartLock() {
   return (
     <section className="anti-smart">
       <div className="shell anti-smart-inner">
-        <span className="eyebrow light">OUR TAKE ON SMART LOCKS</span>
+        <div className="anti-smart-kicker">
+          <span className="eyebrow light">THE OTHER REASON</span>
+          <p>We wanted one useful smart-lock behavior. Not another smart-home appliance.</p>
+        </div>
+
         <h2>Your front door<br/><em>doesn’t need a login.</em></h2>
-        <div className="anti-smart-grid">
-          <div className="anti-smart-list"><span>No app.</span><span>No Wi-Fi.</span><span>No cloud.</span><span>No replacement lock.</span></div>
-          <div className="anti-smart-copy">
-            <p>A smart lock can mean a new lock, an app, an account, cloud services, or putting your phone in the middle of getting home. We wanted the useful part without dragging the whole smart home along with it.</p>
-            <strong>The convenience of a smart lock.<br/>Without the smart-home baggage.</strong>
-            <div className="anti-smart-tag">We kept the useful part.</div>
-            <small>Core access stays dedicated and local. Your physical key remains available whenever you want it.</small>
+
+        <div className="anti-smart-claims" aria-label="BetterKey requires no app, account, Wi-Fi, cloud, or subscription">
+          <span>NO APP</span>
+          <span>NO ACCOUNT</span>
+          <span>NO WI-FI</span>
+          <span>NO CLOUD</span>
+          <span className="anti-subscription">NO SUBSCRIPTION</span>
+        </div>
+
+        <div className="anti-smart-bottom">
+          <p>Some smart-lock ecosystems put advanced access or management features behind paid plans. BetterKey is designed around dedicated local entry instead.</p>
+          <div className="monthly-bill-punch">
+            <span className="eyebrow light">OUR RULE</span>
+            <strong>Unlocking your own front door should not become a monthly bill.</strong>
           </div>
         </div>
       </div>
@@ -195,10 +194,14 @@ function Waitlist() {
   const [email, setEmail] = useState('')
   const formUrl = useMemo(() => WAITLIST_URL, [])
   function handleSubmit(e) { e.preventDefault(); if (email.trim()) navigator.clipboard?.writeText(email.trim()).catch(() => {}); window.open(formUrl, '_blank', 'noopener,noreferrer') }
-  return <section className="waitlist" id="waitlist"><div className="shell waitlist-inner"><div><span className="eyebrow light">EARLY ACCESS</span><h2>Be first<br/>through the door.</h2></div><div className="waitlist-right"><p>Join the list for prototype updates, early testing, and first access when theBetterKey is ready.</p><form onSubmit={handleSubmit}><label className="sr-only" htmlFor="email">Email address</label><input id="email" type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com"/><button type="submit">Join waitlist <ArrowRight size={17}/></button></form><small>For now this opens the current waitlist form. We’ll connect true one-step signup next.</small></div></div></section>
+  return (
+    <section className="waitlist" id="waitlist"><div className="shell waitlist-inner"><div><span className="eyebrow light">EARLY ACCESS</span><h2>Be first<br/>through the door.</h2></div><div className="waitlist-right"><p>Join the list for prototype updates, early testing, and first access when theBetterKey is ready.</p><form onSubmit={handleSubmit}><label className="sr-only" htmlFor="email">Email address</label><input id="email" type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com"/><button type="submit">Join waitlist <ArrowRight size={17}/></button></form><small>For now this opens the current waitlist form. We’ll connect true one-step signup next.</small></div></div></section>
+  )
 }
 
-function Footer() { return <footer className="footer"><div className="shell footer-inner"><a href="#top" className="brand footer-brand">thebetterkey</a><div className="footer-meta"><span>Built in Santa Cruz, CA</span><a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer">Instagram</a><span>© {new Date().getFullYear()}</span></div></div></footer> }
+function Footer() {
+  return <footer className="footer"><div className="shell footer-inner"><a href="#top" className="brand footer-brand">thebetterkey</a><div className="footer-meta"><span>Built in Santa Cruz, CA</span><a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer">Instagram</a><span>© {new Date().getFullYear()}</span></div></div></footer>
+}
 
 export default function App() {
   return <><Nav/><main><Hero/><WhyBetterKey/><AntiSmartLock/><HowItWorks/><Manifesto/><BuildStory/><Waitlist/></main><Footer/></>
