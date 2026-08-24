@@ -1,9 +1,24 @@
-/* Scroll-driven storytelling for the anti-smart-lock section */
+/* Scroll choreography */
 
+/* Desktop hero: collapse the hero statement under the nav while the product explanation arrives. */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .hero-title {
+    position: sticky;
+    top: 92px;
+    z-index: 6;
+    transform-origin: top left;
+    transform: scale(var(--hero-scroll-scale, 1));
+    opacity: var(--hero-scroll-opacity, 1);
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+}
+
+/* Scroll-driven storytelling for the anti-smart-lock section */
 @supports (animation-timeline: view()) {
   .anti-smart {
     position: relative;
-    min-height: 170vh;
+    min-height: 140vh;
     padding: 0;
     view-timeline-name: --anti-smart-scroll;
     view-timeline-axis: block;
@@ -33,25 +48,26 @@
     animation-timeline: --anti-smart-scroll;
   }
 
+  /* Intentionally compressed so the five hits sweep through quickly. */
   .anti-smart-claims span:nth-child(1) {
-    animation-range: cover 31% cover 37%;
+    animation-range: cover 29% cover 32%;
   }
 
   .anti-smart-claims span:nth-child(2) {
-    animation-range: cover 38% cover 44%;
+    animation-range: cover 32.5% cover 35.5%;
   }
 
   .anti-smart-claims span:nth-child(3) {
-    animation-range: cover 45% cover 51%;
+    animation-range: cover 36% cover 39%;
   }
 
   .anti-smart-claims span:nth-child(4) {
-    animation-range: cover 52% cover 58%;
+    animation-range: cover 39.5% cover 42.5%;
   }
 
   .anti-smart-claims span:nth-child(5) {
     animation-name: anti-pill-finale;
-    animation-range: cover 59% cover 68%;
+    animation-range: cover 43% cover 47%;
   }
 
   .anti-smart-bottom {
@@ -59,7 +75,7 @@
     transform: translateY(12px);
     animation: anti-copy-arrive 1s linear both;
     animation-timeline: --anti-smart-scroll;
-    animation-range: cover 61% cover 72%;
+    animation-range: cover 45% cover 51%;
   }
 
   @keyframes anti-pill-light {
@@ -70,7 +86,7 @@
       transform: translateY(0) scale(1);
       box-shadow: 0 0 0 rgba(217,255,67,0);
     }
-    72% {
+    68% {
       transform: translateY(-2px) scale(1.025);
     }
     100% {
@@ -90,7 +106,7 @@
       transform: translateY(0) scale(1);
       box-shadow: 0 0 0 rgba(217,255,67,0);
     }
-    68% {
+    62% {
       transform: translateY(-3px) scale(1.05);
     }
     100% {
@@ -115,8 +131,15 @@
   }
 }
 
-/* Keep the mobile section compact instead of forcing a long sticky scroll. */
+/* Mobile: no sticky hero and no forced long anti-smart scroll. */
 @media (max-width: 900px) {
+  .hero-title {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   @supports (animation-timeline: view()) {
     .anti-smart {
       min-height: auto;
@@ -155,6 +178,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-title {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   .anti-smart {
     min-height: auto;
     padding: 110px 0 105px;
