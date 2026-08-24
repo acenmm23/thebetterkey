@@ -1,0 +1,321 @@
+/* Demo pass: smaller, clearer, physically legible.
+   Uses existing markup only so the interaction stays stable. */
+
+.compact-demo {
+  min-height: 330px;
+  grid-template-columns: .72fr .92fr 1.35fr;
+  gap: 28px;
+  padding: 28px 34px;
+  border-radius: 28px;
+}
+
+.compact-demo-copy {
+  align-self: center;
+  padding-top: 0;
+  max-width: 245px;
+}
+
+.compact-demo-copy h3 {
+  font-size: clamp(27px, 2.4vw, 40px);
+  margin: 12px 0 12px;
+}
+
+/* Replace the old "fake door diagram" copy now that the demo deliberately shows a door slice. */
+.compact-demo-copy p {
+  max-width: 230px;
+  font-size: 0;
+}
+
+.compact-demo-copy p::after {
+  content: 'One press. The bolt moves. Your physical key still works.';
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.compact-key-zone {
+  min-width: 0;
+}
+
+.demo-key-hit {
+  width: min(100%, 250px);
+}
+
+.click-nudge {
+  margin-top: 7px;
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+/* The abstract arrow is gone. The bolt itself is now the motion cue. */
+.compact-motion {
+  display: none !important;
+}
+
+.compact-lock-zone {
+  position: relative;
+  width: 100%;
+  height: 262px;
+  min-width: 0;
+  display: block;
+}
+
+/* Door slab, seen from the side. */
+.compact-lock-zone::before {
+  content: '';
+  position: absolute;
+  left: 43%;
+  top: 10px;
+  width: 70px;
+  height: 240px;
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.72), rgba(255,255,255,.18) 18%, rgba(23,23,20,.05) 82%, rgba(23,23,20,.10)),
+    #ded6ca;
+  border: 1px solid rgba(23,23,20,.10);
+  box-shadow: inset 8px 0 16px rgba(255,255,255,.26), 0 12px 24px rgba(45,38,31,.08);
+  z-index: 2;
+}
+
+.compact-lock-zone > .compact-object-label {
+  position: absolute;
+  left: 8%;
+  top: 4px;
+  margin: 0;
+  z-index: 4;
+}
+
+.compact-lock-zone > .compact-object-label::after {
+  content: '  ·  BETTERKEY INSIDE';
+  color: #9a9388;
+}
+
+/* BetterKey now reads as mounted to the inside face, not floating in space. */
+.compact-device-shell {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  width: 168px;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  border-radius: 34px;
+  z-index: 4;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    -8px 0 0 rgba(23,23,20,.055),
+    0 18px 32px rgba(31,27,23,.18);
+}
+
+.compact-demo.is-unlocked .compact-device-shell {
+  transform: translateY(calc(-50% - 1px));
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    -8px 0 0 rgba(23,23,20,.055),
+    0 21px 36px rgba(31,27,23,.19),
+    0 0 0 1px rgba(217,255,67,.07);
+}
+
+.compact-device-shell:before {
+  inset: 6px;
+  border-radius: 28px;
+}
+
+.compact-device-shell::after {
+  content: 'PROTOTYPE SHOWN';
+  position: absolute;
+  right: 0;
+  top: -22px;
+  color: #817a70;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.compact-device-logo {
+  left: 16px;
+  top: 14px;
+  font-size: 9px;
+}
+
+.compact-device-state {
+  left: 16px;
+  bottom: 14px;
+  font-size: 8px;
+}
+
+/* Real visual outcome: a deadbolt projecting from the door edge. */
+.bolt-status {
+  position: absolute;
+  left: calc(43% - 76px);
+  top: 50%;
+  width: 100px;
+  height: 54px;
+  margin: 0;
+  transform: translateY(-50%);
+  display: block;
+  z-index: 1;
+}
+
+.bolt-track {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  width: 82px;
+  height: 26px;
+  border-radius: 8px 0 0 8px;
+  background: transparent;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.bolt-track i {
+  top: 2px;
+  left: 6px;
+  width: 72px;
+  height: 22px;
+  border-radius: 7px 0 0 7px;
+  background: linear-gradient(180deg,#e0e1de 0%,#b9bcb8 52%,#979c97 100%);
+  box-shadow: inset 0 0 0 1px rgba(70,73,69,.12), 0 3px 8px rgba(54,54,49,.16);
+  transition: transform .36s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Locked = visibly extended. Unlocked = slides back underneath the door slab. */
+.compact-demo.is-locked .bolt-track i {
+  transform: translateX(0);
+}
+
+.compact-demo.is-unlocked .bolt-track i {
+  transform: translateX(62px);
+}
+
+.bolt-copy {
+  position: absolute;
+  right: 2px;
+  top: 36px;
+  width: 140px;
+  text-align: right;
+  font-size: 8px;
+  letter-spacing: .10em;
+  color: #756f66;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+@media (max-width: 1050px) {
+  .compact-demo {
+    min-height: 315px;
+    grid-template-columns: .75fr .9fr 1.25fr;
+    padding: 26px 26px;
+    gap: 20px;
+  }
+
+  .demo-key-hit {
+    width: min(100%, 220px);
+  }
+
+  .compact-device-shell {
+    width: 150px;
+  }
+
+  .compact-lock-zone::before {
+    left: 42%;
+    width: 62px;
+  }
+
+  .bolt-status {
+    left: calc(42% - 70px);
+  }
+}
+
+@media (max-width: 900px) {
+  .compact-demo {
+    min-height: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'copy copy'
+      'key lock';
+    gap: 20px 28px;
+    padding: 24px 22px 28px;
+  }
+
+  .compact-demo-copy {
+    grid-area: copy;
+    max-width: none;
+  }
+
+  .compact-demo-copy p {
+    max-width: 320px;
+  }
+
+  .compact-key-zone {
+    grid-area: key;
+  }
+
+  .compact-lock-zone {
+    grid-area: lock;
+    height: 240px;
+  }
+
+  .demo-key-hit {
+    width: min(100%, 210px);
+  }
+
+  .compact-device-shell {
+    width: 142px;
+  }
+}
+
+@media (max-width: 600px) {
+  .compact-demo {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'copy'
+      'key'
+      'lock';
+    gap: 20px;
+    padding: 22px 16px 24px;
+    border-radius: 24px;
+  }
+
+  .compact-demo-copy h3 {
+    font-size: 29px;
+  }
+
+  .compact-key-zone {
+    padding: 4px 0 8px;
+  }
+
+  .demo-key-hit {
+    width: min(100%, 190px);
+  }
+
+  .compact-lock-zone {
+    height: 225px;
+  }
+
+  .compact-lock-zone::before {
+    left: 44%;
+    width: 56px;
+    height: 210px;
+    top: 8px;
+  }
+
+  .compact-lock-zone > .compact-object-label {
+    left: 4px;
+  }
+
+  .compact-lock-zone > .compact-object-label::after {
+    content: '';
+  }
+
+  .compact-device-shell {
+    width: 132px;
+    right: 3%;
+  }
+
+  .bolt-status {
+    left: calc(44% - 66px);
+  }
+}
