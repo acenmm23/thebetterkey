@@ -16,11 +16,11 @@
   transform: translateY(0) scale(1);
   box-shadow: 0 0 0 rgba(217,255,67,0);
   transition:
-    background-color .18s cubic-bezier(.2,.8,.2,1),
-    color .18s cubic-bezier(.2,.8,.2,1),
-    border-color .18s cubic-bezier(.2,.8,.2,1),
-    transform .18s cubic-bezier(.2,.8,.2,1),
-    box-shadow .18s cubic-bezier(.2,.8,.2,1);
+    background-color .14s cubic-bezier(.2,.8,.2,1),
+    color .14s cubic-bezier(.2,.8,.2,1),
+    border-color .14s cubic-bezier(.2,.8,.2,1),
+    transform .14s cubic-bezier(.2,.8,.2,1),
+    box-shadow .14s cubic-bezier(.2,.8,.2,1);
 }
 
 .anti-smart-claims span.is-motion-lit {
@@ -40,7 +40,7 @@
 .anti-smart-bottom {
   opacity: .42;
   transform: translateY(10px);
-  transition: opacity .28s ease, transform .28s ease;
+  transition: opacity .22s ease, transform .22s ease;
 }
 
 .anti-smart-bottom.is-motion-arrived {
@@ -58,10 +58,10 @@
   transform: translateY(0) scale(1);
   box-shadow: 0 0 0 rgba(217,255,67,0);
   transition:
-    background-color .09s linear,
-    color .09s linear,
-    transform .09s linear,
-    box-shadow .09s linear;
+    background-color .07s linear,
+    color .07s linear,
+    transform .07s linear,
+    box-shadow .07s linear;
 }
 
 .approach-flow .approach-accent {
@@ -91,10 +91,10 @@
   transform: rotate(0deg) scale(1);
   box-shadow: 0 0 0 rgba(217,255,67,0);
   transition:
-    background-color .08s linear,
-    color .08s linear,
-    transform .08s linear,
-    box-shadow .08s linear;
+    background-color .06s linear,
+    color .06s linear,
+    transform .06s linear,
+    box-shadow .06s linear;
 }
 
 .why-statement span {
@@ -121,11 +121,11 @@ html:not([data-betterkey-motion-ready="true"]) .why-statement span {
   color: var(--ink);
 }
 
-/* Desktop gets a longer sticky beat. 182vh means the animation travel is
-   proportional to the user's own viewport height rather than fixed pixels. */
+/* Desktop gets a sticky beat sized in vh so the sequence remains proportional
+   to the user's own viewport. 166vh is about 20% quicker than the previous 182vh. */
 @media (min-width: 901px) {
   .anti-smart {
-    min-height: 182vh;
+    min-height: 166vh;
     padding: 0;
   }
 
