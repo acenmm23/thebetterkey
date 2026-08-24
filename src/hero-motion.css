@@ -1,0 +1,60 @@
+/* Safe desktop-only hero handoff.
+   The poster remains the default/fallback. The compact sentence starts hidden. */
+.hero-title-scroll {
+  transform-origin: top left;
+  will-change: transform, opacity;
+}
+
+.hero-compact-line {
+  position: fixed;
+  z-index: 12;
+  top: 96px;
+  left: max(28px, calc((100vw - 1400px) / 2));
+  right: max(28px, calc((100vw - 1400px) / 2));
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: .22em;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(46px, 4.5vw, 70px);
+  font-weight: 700;
+  line-height: .95;
+  letter-spacing: -.06em;
+  pointer-events: none;
+  white-space: nowrap;
+  transform-origin: top left;
+  will-change: opacity, transform;
+}
+
+.hero-compact-line span {
+  display: inline-block;
+  will-change: opacity, transform;
+}
+
+.hero-compact-line .hero-compact-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
+}
+
+@media (max-width: 900px) {
+  .hero-title-scroll {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero-compact-line {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-scroll {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero-compact-line {
+    display: none !important;
+  }
+}
