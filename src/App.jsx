@@ -97,10 +97,59 @@ function Hero() {
         Your front door<br/>should work<br/><em>like your car.</em>
       </h1>
       <div className="hero-bottom reveal reveal-delay-2">
-        <p>Press a button. Unlock your existing deadbolt. No phone. No Wi-Fi.</p>
+        <p><strong>Walk up. Press. Walk in.</strong><span>Your existing deadbolt, without fumbling with a key or pulling out your phone.</span></p>
         <a href="#how" className="text-link">See how it works <ArrowDown size={16}/></a>
       </div>
       <LockDemo />
+    </section>
+  )
+}
+
+const moments = [
+  {
+    index: '01',
+    title: 'Hands full',
+    copy: 'Groceries, a backpack, coffee. Press as you walk up instead of stopping to line up and turn the key.',
+  },
+  {
+    index: '02',
+    title: 'Coming home at night',
+    copy: 'No finding the keyway in the dark. The tactile button is already on the key you carry.',
+  },
+  {
+    index: '03',
+    title: 'Every single day',
+    copy: 'It is a tiny bit of friction, but it is one you repeat constantly. BetterKey makes that moment disappear.',
+  },
+]
+
+function WhyBetterKey() {
+  return (
+    <section className="why-better shell">
+      <div className="why-intro">
+        <span className="eyebrow">WHY NOT JUST USE A KEY?</span>
+        <div className="why-intro-main">
+          <h2 className="why-title">Your key works.<br/><em>Getting home can feel easier.</em></h2>
+          <p>A normal key is already reliable. BetterKey keeps it that way, while removing the little bit of friction you deal with every time you get home.</p>
+        </div>
+      </div>
+
+      <div className="moment-grid">
+        {moments.map(({index, title, copy}) => (
+          <article className="moment" key={index}>
+            <span className="moment-index">{index}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="why-statement">
+        <span>Not because keys are broken.</span>
+        <strong>Because they can be better.</strong>
+      </div>
     </section>
   )
 }
@@ -246,6 +295,7 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
+        <WhyBetterKey />
         <HowItWorks />
         <Manifesto />
         <BuildStory />
