@@ -93,102 +93,7 @@
   }
 }
 
-/*
-  HERO STORY
-  Safe baseline: React only changes CSS variables on this local wrapper.
-  The poster is visible by default. The compact sentence is a separate layer.
-*/
-.hero-title-scroll {
-  position: relative;
-  transform-origin: top left;
-}
-
-.hero-title-poster {
-  transform-origin: top left;
-}
-
-.hero-poster-word,
-.hero-sentence-word {
-  display: inline-block;
-}
-
-.hero-title-sentence {
-  display: none;
-}
-
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .hero-title-scroll {
-    position: sticky;
-    top: 96px;
-    z-index: 5;
-    min-height: clamp(330px, 34vw, 545px);
-    pointer-events: none;
-  }
-
-  .hero-title-poster {
-    transform: scale(var(--hero-poster-scale, 1));
-    will-change: transform;
-  }
-
-  .hero-poster-word {
-    opacity: var(--word-opacity, 1);
-    transform: translateY(var(--word-y, 0));
-    will-change: opacity, transform;
-  }
-
-  .hero-title-sentence {
-    position: absolute;
-    left: 0;
-    top: 4px;
-    display: flex;
-    align-items: baseline;
-    flex-wrap: nowrap;
-    gap: .205em;
-    width: max-content;
-    max-width: calc(100vw - 90px);
-    white-space: nowrap;
-    font-size: clamp(48px, 4.25vw, 72px);
-    line-height: .96;
-    letter-spacing: -.06em;
-    font-weight: 700;
-    opacity: var(--hero-sentence-opacity, 1);
-    will-change: opacity;
-  }
-
-  .hero-sentence-word {
-    opacity: var(--word-opacity, 0);
-    transform: translateY(var(--word-y, 18px));
-    transition: opacity .12s linear, transform .18s cubic-bezier(.16,1,.3,1);
-    will-change: opacity, transform;
-  }
-
-  .hero-sentence-outline {
-    color: transparent;
-    -webkit-text-stroke: 1px var(--ink);
-  }
-}
-
-/* Mobile stays simple and predictable. */
 @media (max-width: 900px) {
-  .hero-title-scroll {
-    position: relative;
-    top: auto;
-    min-height: 0;
-  }
-
-  .hero-title-poster {
-    transform: none !important;
-  }
-
-  .hero-poster-word {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .hero-title-sentence {
-    display: none !important;
-  }
-
   @supports (animation-timeline: view()) {
     .anti-smart {
       min-height: auto;
@@ -225,23 +130,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-title-scroll {
-    position: relative;
-    top: auto;
-    min-height: 0;
-  }
-
-  .hero-title-poster {
-    transform: none !important;
-  }
-
-  .hero-poster-word {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .hero-title-sentence { display: none !important; }
-
   .anti-smart {
     min-height: auto;
     padding: 110px 0 105px;
