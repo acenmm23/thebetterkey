@@ -1,0 +1,185 @@
+/* Scroll-driven storytelling for the anti-smart-lock section */
+
+@supports (animation-timeline: view()) {
+  .anti-smart {
+    position: relative;
+    min-height: 170vh;
+    padding: 0;
+    view-timeline-name: --anti-smart-scroll;
+    view-timeline-axis: block;
+  }
+
+  .anti-smart-inner {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    padding-top: 86px;
+    padding-bottom: 78px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .anti-smart-claims span,
+  .anti-smart-claims .anti-subscription {
+    background: transparent;
+    border-color: rgba(242,235,223,.18);
+    color: #c2bcb2;
+    font-weight: 500;
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0 rgba(217,255,67,0);
+    will-change: background-color, color, border-color, transform, box-shadow;
+    animation: anti-pill-light 1s linear both;
+    animation-timeline: --anti-smart-scroll;
+  }
+
+  .anti-smart-claims span:nth-child(1) {
+    animation-range: cover 31% cover 37%;
+  }
+
+  .anti-smart-claims span:nth-child(2) {
+    animation-range: cover 38% cover 44%;
+  }
+
+  .anti-smart-claims span:nth-child(3) {
+    animation-range: cover 45% cover 51%;
+  }
+
+  .anti-smart-claims span:nth-child(4) {
+    animation-range: cover 52% cover 58%;
+  }
+
+  .anti-smart-claims span:nth-child(5) {
+    animation-name: anti-pill-finale;
+    animation-range: cover 59% cover 68%;
+  }
+
+  .anti-smart-bottom {
+    opacity: .38;
+    transform: translateY(12px);
+    animation: anti-copy-arrive 1s linear both;
+    animation-timeline: --anti-smart-scroll;
+    animation-range: cover 61% cover 72%;
+  }
+
+  @keyframes anti-pill-light {
+    0% {
+      background: transparent;
+      border-color: rgba(242,235,223,.18);
+      color: #c2bcb2;
+      transform: translateY(0) scale(1);
+      box-shadow: 0 0 0 rgba(217,255,67,0);
+    }
+    72% {
+      transform: translateY(-2px) scale(1.025);
+    }
+    100% {
+      background: var(--acid);
+      border-color: var(--acid);
+      color: var(--ink);
+      transform: translateY(-1px) scale(1.015);
+      box-shadow: 0 0 30px rgba(217,255,67,.12);
+    }
+  }
+
+  @keyframes anti-pill-finale {
+    0% {
+      background: transparent;
+      border-color: rgba(242,235,223,.18);
+      color: #c2bcb2;
+      transform: translateY(0) scale(1);
+      box-shadow: 0 0 0 rgba(217,255,67,0);
+    }
+    68% {
+      transform: translateY(-3px) scale(1.05);
+    }
+    100% {
+      background: var(--acid);
+      border-color: var(--acid);
+      color: var(--ink);
+      font-weight: 700;
+      transform: translateY(-2px) scale(1.035);
+      box-shadow: 0 0 42px rgba(217,255,67,.20);
+    }
+  }
+
+  @keyframes anti-copy-arrive {
+    from {
+      opacity: .38;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Keep the mobile section compact instead of forcing a long sticky scroll. */
+@media (max-width: 900px) {
+  @supports (animation-timeline: view()) {
+    .anti-smart {
+      min-height: auto;
+      padding: 86px 0 82px;
+      view-timeline-name: none;
+    }
+
+    .anti-smart-inner {
+      position: relative;
+      top: auto;
+      min-height: 0;
+      padding: 0;
+      display: block;
+    }
+
+    .anti-smart-claims span,
+    .anti-smart-claims .anti-subscription {
+      animation: none;
+      background: var(--acid);
+      border-color: var(--acid);
+      color: var(--ink);
+      box-shadow: none;
+      transform: none;
+    }
+
+    .anti-smart-claims .anti-subscription {
+      font-weight: 700;
+    }
+
+    .anti-smart-bottom {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anti-smart {
+    min-height: auto;
+    padding: 110px 0 105px;
+  }
+
+  .anti-smart-inner {
+    position: relative;
+    min-height: 0;
+    padding: 0;
+    display: block;
+  }
+
+  .anti-smart-claims span,
+  .anti-smart-claims .anti-subscription {
+    animation: none !important;
+    background: var(--acid);
+    border-color: var(--acid);
+    color: var(--ink);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .anti-smart-bottom {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
