@@ -1,21 +1,5 @@
 /* Scroll choreography */
 
-/* Desktop hero: collapse the hero statement under the nav while the product explanation arrives.
-   Use the individual `scale` property instead of `transform` so this can coexist with the
-   hero's entrance animation, which also owns `transform`. */
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .hero-title {
-    position: sticky;
-    top: 92px;
-    z-index: 6;
-    transform-origin: top left;
-    scale: var(--hero-scroll-scale, 1);
-    filter: opacity(var(--hero-scroll-opacity, 1));
-    will-change: scale, filter;
-    pointer-events: none;
-  }
-}
-
 /* Scroll-driven storytelling for the anti-smart-lock section */
 @supports (animation-timeline: view()) {
   .anti-smart {
@@ -133,15 +117,8 @@
   }
 }
 
-/* Mobile: no sticky hero and no forced long anti-smart scroll. */
+/* Mobile: no forced long anti-smart scroll. */
 @media (max-width: 900px) {
-  .hero-title {
-    position: relative;
-    top: auto;
-    scale: 1 !important;
-    filter: none !important;
-  }
-
   @supports (animation-timeline: view()) {
     .anti-smart {
       min-height: auto;
@@ -180,13 +157,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-title {
-    position: relative;
-    top: auto;
-    scale: 1 !important;
-    filter: none !important;
-  }
-
   .anti-smart {
     min-height: auto;
     padding: 110px 0 105px;
