@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowRight } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import betterKeyKey from './assets/betterkey-key.webp'
 import deadboltImg from './assets/deadbolt.webp'
 
@@ -89,10 +89,75 @@ function LockDemo() {
 }
 
 function Hero() {
+  const heroRef = useRef(null)
+  const titleScrollRef = useRef(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+    const titleScroll = titleScrollRef.current
+    if (!hero || !titleScroll) return undefined
+
+    const desktop = window.matchMedia('(min-width: 901px)')
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let frame = 0
+
+    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value))
+
+    const reset = () => {
+      titleScroll.style.removeProperty('--hero-scale')
+      titleScroll.style.removeProperty('--hero-opacity')
+    }
+
+    const update = () => {
+      frame = 0
+
+      if (!desktop.matches || reducedMotion.matches) {
+        reset()
+        return
+      }
+
+      const scrollY = window.scrollY || window.pageYOffset
+      const start = hero.offsetTop + 90
+      const shrinkDistance = Math.min(420, window.innerHeight * 0.5)
+      const shrinkProgress = clamp((scrollY - start) / shrinkDistance)
+      const scale = 1 - (shrinkProgress * 0.73)
+
+      const fadeStart = start + shrinkDistance + Math.min(210, window.innerHeight * 0.22)
+      const fadeDistance = Math.min(230, window.innerHeight * 0.28)
+      const fadeProgress = clamp((scrollY - fadeStart) / fadeDistance)
+      const opacity = 1 - fadeProgress
+
+      titleScroll.style.setProperty('--hero-scale', scale.toFixed(4))
+      titleScroll.style.setProperty('--hero-opacity', opacity.toFixed(4))
+    }
+
+    const requestUpdate = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    desktop.addEventListener?.('change', requestUpdate)
+    reducedMotion.addEventListener?.('change', requestUpdate)
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      desktop.removeEventListener?.('change', requestUpdate)
+      reducedMotion.removeEventListener?.('change', requestUpdate)
+      reset()
+    }
+  }, [])
+
   return (
-    <section className="hero shell" id="top">
+    <section className="hero shell" id="top" ref={heroRef}>
       <div className="hero-kicker reveal">A better way through the front door.</div>
-      <h1 className="display hero-title reveal reveal-delay-1">Your front door<br/>should work<br/><em>like your car.</em></h1>
+      <div className="hero-title-scroll" ref={titleScrollRef}>
+        <h1 className="display hero-title reveal reveal-delay-1">Your front door<br/>should work<br/><em>like your car.</em></h1>
+      </div>
       <div className="hero-clarity reveal reveal-delay-2">
         <div className="hero-clarity-copy">
           <span className="eyebrow">THE PRODUCT</span>
