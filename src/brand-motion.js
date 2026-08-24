@@ -9,6 +9,20 @@ function sectionProgress(element, startViewport = 0.78, endViewport = 0.26) {
   return clamp01((start - rect.top) / Math.max(1, start - end))
 }
 
+function centeredSectionProgress(element, startCenterViewport = 0.70, endCenterViewport = 0.05) {
+  if (!element) return 0
+  const rect = element.getBoundingClientRect()
+  const vh = Math.max(1, window.innerHeight)
+  const elementCenter = rect.top + rect.height / 2
+  const start = vh * startCenterViewport
+  const end = vh * endCenterViewport
+
+  // Drive the sequence from the panel's visual center, not just its top edge.
+  // This naturally accounts for both viewport height and panel height, so a
+  // shorter laptop screen does not enter the sequence halfway through.
+  return clamp01((start - elementCenter) / Math.max(1, start - end))
+}
+
 function stickySectionProgress(section) {
   if (!section) return 0
 
@@ -60,10 +74,13 @@ export function initBrandMotion() {
 
   const updateApproach = () => {
     if (!approachPanel || approachWords.length < 3) return
-    // About 20% less scroll travel than before.
-    const p = sectionProgress(approachPanel, 0.80, 0.38)
 
-    const activeIndex = p < 0.34 ? 0 : p < 0.67 ? 1 : 2
+    // Use the panel center and a longer viewport-relative travel window.
+    // This delays the first snap on shorter laptop screens and gives each
+    // state a little more time to sit before the next one takes over.
+    const p = centeredSectionProgress(approachPanel, 0.70, 0.05)
+
+    const activeIndex = p < 0.36 ? 0 : p < 0.70 ? 1 : 2
 
     approachWords.forEach((word, index) => {
       word.classList.toggle('is-motion-active', index === activeIndex)
