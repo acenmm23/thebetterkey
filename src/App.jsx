@@ -112,41 +112,43 @@ function WhyBetterKey() {
         <span className="eyebrow">WHY BETTERKEY</span>
         <div className="why-intro-main">
           <h2 className="why-title">Your key isn’t broken.<br/><em>We made the keyway optional.</em></h2>
-          <p>BetterKey does not replace the thing that already works. It adds one new option to the key you already carry: unlock while you are still walking up.</p>
+          <p>BetterKey keeps the physical key you already trust and adds another way in: press the button while you are approaching, then open the door when you get there.</p>
         </div>
       </div>
 
-      <div className="unlock-compare" aria-label="Compare unlocking with a normal key and BetterKey">
-        <div className="compare-row compare-key">
-          <span className="compare-label">WITH A KEY</span>
-          <div className="compare-steps">
-            <span>Reach the door</span><i>→</i><span>Line it up</span><i>→</i><span>Insert</span><i>→</i><span>Turn</span>
-          </div>
+      <div className="approach-panel">
+        <span className="eyebrow light">THE DIFFERENCE</span>
+        <div className="approach-message">
+          <span>Unlock on the way.</span>
+          <strong>Not at the door.</strong>
         </div>
-        <div className="compare-row compare-better">
-          <span className="compare-label">WITH BETTERKEY</span>
-          <div className="compare-steps">
-            <span className="compare-accent">Press while approaching</span><i>→</i><span>Open the door</span>
-          </div>
+        <div className="approach-flow" aria-label="Approach, press, then open">
+          <span>Approaching</span><i>→</i><span className="approach-accent">Press</span><i>→</i><span>Open</span>
         </div>
+        <p>Your physical key still works exactly like a physical key.</p>
       </div>
 
       <div className="value-split">
         <article className="value-case">
           <span className="eyebrow">FOR MOST PEOPLE</span>
           <h3>A little easier.<br/><em>Every single day.</em></h3>
-          <p>No life-changing promise. Just less stopping, lining up, inserting, and turning every time you come home.</p>
+          <p>Not life-changing. Just nicer. Press while you are walking up, and when you reach the door, it is already unlocked.</p>
         </article>
         <article className="value-case">
           <span className="eyebrow">FOR SOME PEOPLE</span>
-          <h3>The same button<br/><em>can mean a lot more.</em></h3>
-          <p>If gripping, precise alignment, or twisting is uncomfortable or difficult, the same one-press interaction removes that motion from everyday entry.</p>
+          <h3>That same small change<br/><em>can mean a lot more.</em></h3>
+          <p>For anyone who finds gripping or twisting a key difficult, pressing a button can make everyday entry meaningfully easier.</p>
         </article>
       </div>
 
+      <div className="situational-note">
+        <span className="eyebrow">AND SOMETIMES</span>
+        <p><strong>A button is simply easier.</strong> In the dark, in the cold, with gloves on, or in the kinds of moments where a keyway asks for more precision than a press.</p>
+      </div>
+
       <div className="why-statement">
-        <div><span>Keep the key.</span> <strong>Skip the keyway.</strong></div>
-        <p>And if you ever want to use the key normally, you still can.</p>
+        <div><span>Keep the key.</span> <strong>Add the option.</strong></div>
+        <p>Use whichever makes sense in the moment. Nothing about normal key entry goes away.</p>
       </div>
     </section>
   )
