@@ -1,9 +1,12 @@
 import { ArrowDown, ArrowRight } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import betterKeyKey from './assets/betterkey-key.webp'
 import deadboltImg from './assets/deadbolt.webp'
 
 const WAITLIST_URL = 'https://forms.gle/jDQy3swL2g5gwGGq8'
+const HERO_WORDS = ['Your', 'front', 'door', 'should', 'work', 'like', 'your', 'car.']
+
+const clamp01 = (value) => Math.min(1, Math.max(0, value))
 
 function NoCloudGraphic() {
   return (
@@ -89,12 +92,87 @@ function LockDemo() {
 }
 
 function Hero() {
+  const heroRef = useRef(null)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 901px)')
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    if (!desktop.matches || reducedMotion.matches) return undefined
+
+    let rafId = 0
+
+    const update = () => {
+      const hero = heroRef.current
+      if (!hero) return
+
+      const heroTop = hero.getBoundingClientRect().top + window.scrollY
+      const start = heroTop + 170
+      const travel = Math.max(760, Math.min(1040, window.innerHeight * 1.05))
+      setProgress(clamp01((window.scrollY - start) / travel))
+    }
+
+    const scheduleUpdate = () => {
+      if (rafId) return
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0
+        update()
+      })
+    }
+
+    update()
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
+
+    return () => {
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
+      if (rafId) window.cancelAnimationFrame(rafId)
+    }
+  }, [])
+
+  const shrink = clamp01((progress - 0.10) / 0.46)
+  const posterScale = 1 - (0.16 * shrink)
+  const posterFade = clamp01((progress - 0.48) / 0.16)
+  const posterOpacity = 1 - posterFade
+
+  const compactIn = clamp01((progress - 0.46) / 0.18)
+  const compactOut = 1 - clamp01((progress - 0.92) / 0.08)
+  const compactOpacity = compactIn * compactOut
+  const compactY = 14 * (1 - compactIn)
+
   return (
-    <section className="hero shell" id="top">
+    <section className="hero shell" id="top" ref={heroRef}>
       <div className="hero-kicker reveal">A better way through the front door.</div>
-      <h1 className="display hero-title reveal reveal-delay-1">
-        Your front door<br/>should work<br/><em>like your car.</em>
-      </h1>
+
+      <div
+        className="hero-title-scroll"
+        style={{ transform: `scale(${posterScale})`, opacity: posterOpacity }}
+      >
+        <h1 className="display hero-title reveal reveal-delay-1">
+          Your front door<br/>should work<br/><em>like your car.</em>
+        </h1>
+      </div>
+
+      <p
+        className="hero-compact-line"
+        aria-hidden="true"
+        style={{ opacity: compactOpacity, transform: `translateY(${compactY}px)` }}
+      >
+        {HERO_WORDS.map((word, index) => {
+          const wordIn = clamp01((progress - (0.47 + index * 0.035)) / 0.10)
+          return (
+            <span
+              key={word}
+              className={index >= 5 ? 'hero-compact-outline' : undefined}
+              style={{ opacity: wordIn, transform: `translateY(${(1 - wordIn) * 12}px)` }}
+            >
+              {word}
+            </span>
+          )
+        })}
+      </p>
 
       <div className="hero-clarity reveal reveal-delay-2">
         <div className="hero-clarity-copy">
