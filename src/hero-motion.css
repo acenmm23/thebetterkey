@@ -1,7 +1,9 @@
 /* Safe desktop-only hero handoff.
-   The poster remains the default/fallback. The compact sentence starts hidden. */
+   The poster is always the default/fallback. A separate compact sentence is revealed later. */
 .hero-title-scroll {
   transform-origin: top left;
+  transform: scale(var(--safe-poster-scale, 1)) !important;
+  opacity: var(--safe-poster-opacity, 1) !important;
   will-change: transform, opacity;
 }
 
@@ -17,18 +19,22 @@
   gap: .22em;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(46px, 4.5vw, 70px);
+  font-size: clamp(48px, 4.2vw, 66px);
   font-weight: 700;
   line-height: .95;
   letter-spacing: -.06em;
   pointer-events: none;
   white-space: nowrap;
   transform-origin: top left;
+  opacity: var(--safe-line-opacity, 0) !important;
+  transform: translateY(var(--safe-line-y, 12px)) !important;
   will-change: opacity, transform;
 }
 
 .hero-compact-line span {
   display: inline-block;
+  opacity: var(--safe-word-opacity, 0) !important;
+  transform: translateY(var(--safe-word-y, 10px)) !important;
   will-change: opacity, transform;
 }
 
