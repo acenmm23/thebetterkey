@@ -1,0 +1,31 @@
+/* BetterKey product imagery refresh */
+.key-demo-card{position:absolute;left:6%;bottom:5.5%;z-index:4;display:flex;align-items:center;gap:28px;padding:18px 18px 18px 24px;border:1px solid rgba(23,23,20,.12);background:rgba(246,241,233,.74);backdrop-filter:blur(16px);border-radius:25px;box-shadow:0 20px 50px rgba(40,34,27,.12)}
+.interactive-key-wrap{position:relative;width:116px;height:170px;display:grid;place-items:center}
+.interactive-key{height:168px;width:auto;display:block;filter:drop-shadow(0 14px 14px rgba(42,29,19,.22));user-select:none;pointer-events:none}
+.key-button-hotspot{position:absolute;left:50%;top:41%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(217,255,67,.1);box-shadow:0 0 0 0 rgba(217,255,67,.45);transition:transform .16s,background .16s,box-shadow .16s}
+.key-button-hotspot:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(217,255,67,.22);box-shadow:0 0 0 10px rgba(217,255,67,.11)}
+.key-button-hotspot:active{transform:translate(-50%,-50%) scale(.94)}
+.key-button-pulse{position:absolute;inset:7px;border-radius:50%;border:1px solid rgba(23,23,20,.55)}
+.pillar{min-height:470px}
+.pillar-visual{height:225px;display:grid;place-items:center;margin:10px 0 22px;overflow:visible}
+.pillar-visual img{display:block;object-fit:contain;filter:drop-shadow(0 18px 22px rgba(40,34,27,.10))}
+.pillar-key{height:220px;width:auto}
+.pillar-deadbolt{width:210px;height:210px}
+.pillar-cloud-svg{width:225px;height:auto;color:#10202c;opacity:.9;display:block}
+.no-cloud-x{stroke-width:9}
+@media(max-width:900px){
+  .key-demo-card{left:20px;bottom:20px;right:auto}
+  .interactive-key-wrap{width:94px;height:142px}
+  .interactive-key{height:140px}
+  .key-button-hotspot{top:41%;width:34px;height:34px}
+  .pillar{min-height:360px}
+  .pillar-visual{height:185px}
+  .pillar-key{height:180px}.pillar-deadbolt{width:175px;height:175px}.pillar-cloud-svg{width:190px}
+}
+@media(max-width:600px){
+  .key-demo-card{right:14px;left:14px;bottom:14px;justify-content:space-between;padding:14px 16px}
+  .interactive-key-wrap{width:82px;height:118px}
+  .interactive-key{height:116px}
+  .key-button-hotspot{top:41%;width:30px;height:30px}
+  .fob-copy strong{max-width:160px}
+}

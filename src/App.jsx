@@ -1,7 +1,36 @@
-import { ArrowDown, ArrowRight, LockKeyhole, Radio, WifiOff, Wrench } from 'lucide-react'
+import { ArrowDown, ArrowRight } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import betterKeyKey from './assets/betterkey-key.webp'
+import deadboltImg from './assets/deadbolt.webp'
 
 const WAITLIST_URL = 'https://forms.gle/jDQy3swL2g5gwGGq8'
+
+function NoCloudGraphic() {
+  return (
+    <svg className="pillar-cloud-svg" viewBox="0 0 320 240" aria-hidden="true">
+      <g fill="none" stroke="currentColor" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="126" y="35" width="70" height="126" rx="14" />
+        <line x1="147" y1="48" x2="175" y2="48" />
+        <rect x="50" y="103" width="65" height="92" rx="13" />
+        <rect x="64" y="124" width="37" height="43" rx="6" />
+        <path d="M52 78c19-20 50-20 69 0M62 89c14-14 35-14 49 0M75 99c7-7 16-7 23 0" />
+        <circle cx="86" cy="109" r="4" fill="currentColor" stroke="none" />
+        <path d="M145 205c-4-16 4-29 18-37 18-10 39 3 39 23 0 6-2 11-5 16h-45c-3-1-5-1-7-2Z" />
+        <line x1="155" y1="218" x2="192" y2="218" />
+        <path d="M224 173c4-17 18-29 35-29 18 0 33 14 36 32 12 0 22 9 22 21 0 12-10 21-23 21h-67c-13 0-23-10-23-22 0-11 8-20 20-23Z" />
+        <rect x="228" y="94" width="49" height="79" rx="18" />
+        <circle cx="252" cy="117" r="7" />
+        <circle cx="242" cy="144" r="3" fill="currentColor" stroke="none" />
+        <circle cx="253" cy="144" r="3" fill="currentColor" stroke="none" />
+        <circle cx="264" cy="144" r="3" fill="currentColor" stroke="none" />
+        <circle cx="247" cy="155" r="3" fill="currentColor" stroke="none" />
+        <circle cx="259" cy="155" r="3" fill="currentColor" stroke="none" />
+        <line className="no-cloud-x" x1="35" y1="25" x2="290" y2="225" />
+        <line className="no-cloud-x" x1="290" y1="25" x2="35" y2="225" />
+      </g>
+    </svg>
+  )
+}
 
 function Nav() {
   return (
@@ -40,17 +69,21 @@ function LockDemo() {
         </div>
       </div>
 
-      <div className="fob-card">
+      <div className="key-demo-card">
         <div className="fob-copy">
           <span className="eyebrow">TRY IT</span>
-          <strong>{locked ? 'Press to unlock' : 'Press to lock'}</strong>
+          <strong>{locked ? 'Press the key button to unlock' : 'Press the key button to lock'}</strong>
         </div>
-        <button className="fob" onClick={() => setLocked(v => !v)} aria-label={locked ? 'Unlock demo' : 'Lock demo'}>
-          <span className="fob-loop" />
-          <span className="fob-face">
-            <span className="fob-icon"><LockKeyhole size={19} strokeWidth={1.7} /></span>
-          </span>
-        </button>
+        <div className="interactive-key-wrap">
+          <img className="interactive-key" src={betterKeyKey} alt="BetterKey leather key fob" />
+          <button
+            className="key-button-hotspot"
+            onClick={() => setLocked(v => !v)}
+            aria-label={locked ? 'Unlock demo with key button' : 'Lock demo with key button'}
+          >
+            <span className="key-button-pulse" />
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -73,9 +106,9 @@ function Hero() {
 }
 
 const pillars = [
-  { icon: Radio, index: '01', title: 'Dedicated button', copy: 'No pulling out your phone. Reach for a physical fob and press.' },
-  { icon: Wrench, index: '02', title: 'Keeps your deadbolt', copy: 'Designed around the lock you already use, rather than replacing your whole front-door routine.' },
-  { icon: WifiOff, index: '03', title: 'Not another cloud lock', copy: 'The door should still feel like a door. Core access should not depend on your Wi-Fi connection.' },
+  { image: betterKeyKey, imageClass: 'pillar-key', index: '01', title: 'Dedicated button', copy: 'The button lives right on your key. No pulling out your phone, no app ritual. Press and walk in.' },
+  { image: deadboltImg, imageClass: 'pillar-deadbolt', index: '02', title: 'Keeps your deadbolt', copy: 'Designed around the lock you already use, rather than replacing your whole front-door routine.' },
+  { graphic: 'no-cloud', index: '03', title: 'Not another cloud lock', copy: 'Core access should not depend on your phone, Wi-Fi, voice assistant, or a cloud connection.' },
 ]
 
 function HowItWorks() {
@@ -86,9 +119,12 @@ function HowItWorks() {
         <h2 className="section-title">Smart-home ease.<br/>Without the smart-home ritual.</h2>
       </div>
       <div className="pillars">
-        {pillars.map(({icon: Icon, index, title, copy}) => (
+        {pillars.map(({image, imageClass, graphic, index, title, copy}) => (
           <article className="pillar" key={index}>
-            <div className="pillar-top"><span>{index}</span><Icon size={24} strokeWidth={1.4}/></div>
+            <div className="pillar-top"><span>{index}</span></div>
+            <div className="pillar-visual">
+              {graphic === 'no-cloud' ? <NoCloudGraphic /> : <img src={image} alt="" className={imageClass} aria-hidden="true" />}
+            </div>
             <div>
               <h3>{title}</h3>
               <p>{copy}</p>
@@ -124,7 +160,7 @@ function BuildStory() {
           <h2 className="section-title">Not a render.<br/>A product in progress.</h2>
           <p>theBetterKey is being designed, printed, wired, broken, rebuilt, and tested in public. Follow the messy part, not just the launch photos.</p>
           <a href="https://instagram.com/ahsonmade" target="_blank" rel="noreferrer" className="outline-link">
-           Follow the build <ArrowRight size={15}/>
+            Follow the build <ArrowRight size={15}/>
           </a>
         </div>
 
@@ -164,8 +200,6 @@ function Waitlist() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // Existing Google Form stays as the live destination until a proper inline endpoint is connected.
-    // Email is copied so it is ready to paste into the current form.
     if (email.trim()) navigator.clipboard?.writeText(email.trim()).catch(() => {})
     window.open(formUrl, '_blank', 'noopener,noreferrer')
   }
