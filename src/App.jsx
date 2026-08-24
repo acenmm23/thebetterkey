@@ -97,65 +97,63 @@ function Hero() {
         Your front door<br/>should work<br/><em>like your car.</em>
       </h1>
       <div className="hero-bottom reveal reveal-delay-2">
-        <p><strong>Walk up. Press. Walk in.</strong><span>Your existing deadbolt, without fumbling with a key or pulling out your phone.</span></p>
-        <a href="#how" className="text-link">See how it works <ArrowDown size={16}/></a>
+        <p><strong>Press before you reach the door.</strong><span>Open it when you get there. Your existing deadbolt. Your physical key. One easier way in.</span></p>
+        <a href="#why" className="text-link">Why it matters <ArrowDown size={16}/></a>
       </div>
       <LockDemo />
     </section>
   )
 }
 
-const moments = [
-  {
-    index: '01',
-    title: 'Hands full',
-    copy: 'Groceries, a backpack, coffee. Press as you walk up instead of stopping to line up and turn the key.',
-  },
-  {
-    index: '02',
-    title: 'Coming home at night',
-    copy: 'No finding the keyway in the dark. The tactile button is already on the key you carry.',
-  },
-  {
-    index: '03',
-    title: 'Every single day',
-    copy: 'It is a tiny bit of friction, but it is one you repeat constantly. BetterKey makes that moment disappear.',
-  },
-]
-
 function WhyBetterKey() {
   return (
-    <section className="why-better shell">
+    <section className="why-better shell" id="why">
       <div className="why-intro">
-        <span className="eyebrow">WHY NOT JUST USE A KEY?</span>
+        <span className="eyebrow">WHY BETTERKEY</span>
         <div className="why-intro-main">
-          <h2 className="why-title">Your key works.<br/><em>Getting home can feel easier.</em></h2>
-          <p>A normal key is already reliable. BetterKey keeps it that way, while removing the little bit of friction you deal with every time you get home.</p>
+          <h2 className="why-title">Your key isn’t broken.<br/><em>We made the keyway optional.</em></h2>
+          <p>BetterKey does not replace the thing that already works. It adds one new option to the key you already carry: unlock while you are still walking up.</p>
         </div>
       </div>
 
-      <div className="moment-grid">
-        {moments.map(({index, title, copy}) => (
-          <article className="moment" key={index}>
-            <span className="moment-index">{index}</span>
-            <div>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </div>
-          </article>
-        ))}
+      <div className="unlock-compare" aria-label="Compare unlocking with a normal key and BetterKey">
+        <div className="compare-row compare-key">
+          <span className="compare-label">WITH A KEY</span>
+          <div className="compare-steps">
+            <span>Reach the door</span><i>→</i><span>Line it up</span><i>→</i><span>Insert</span><i>→</i><span>Turn</span>
+          </div>
+        </div>
+        <div className="compare-row compare-better">
+          <span className="compare-label">WITH BETTERKEY</span>
+          <div className="compare-steps">
+            <span className="compare-accent">Press while approaching</span><i>→</i><span>Open the door</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="value-split">
+        <article className="value-case">
+          <span className="eyebrow">FOR MOST PEOPLE</span>
+          <h3>A little easier.<br/><em>Every single day.</em></h3>
+          <p>No life-changing promise. Just less stopping, lining up, inserting, and turning every time you come home.</p>
+        </article>
+        <article className="value-case">
+          <span className="eyebrow">FOR SOME PEOPLE</span>
+          <h3>The same button<br/><em>can mean a lot more.</em></h3>
+          <p>If gripping, precise alignment, or twisting is uncomfortable or difficult, the same one-press interaction removes that motion from everyday entry.</p>
+        </article>
       </div>
 
       <div className="why-statement">
-        <span>Not because keys are broken.</span>
-        <strong>Because they can be better.</strong>
+        <div><span>Keep the key.</span> <strong>Skip the keyway.</strong></div>
+        <p>And if you ever want to use the key normally, you still can.</p>
       </div>
     </section>
   )
 }
 
 const pillars = [
-  { image: betterKeyKey, imageClass: 'pillar-key', index: '01', title: 'Dedicated button', copy: 'The button lives right on your key. No pulling out your phone, no app ritual. Press and walk in.' },
+  { image: betterKeyKey, imageClass: 'pillar-key', index: '01', title: 'Dedicated button', copy: 'The button lives right on the key you already carry. Press while you are approaching the door.' },
   { image: deadboltImg, imageClass: 'pillar-deadbolt', index: '02', title: 'Keeps your deadbolt', copy: 'Designed around the lock you already use, rather than replacing your whole front-door routine.' },
   { graphic: 'no-cloud', index: '03', title: 'Not another cloud lock', copy: 'Core access should not depend on your phone, Wi-Fi, voice assistant, or a cloud connection.' },
 ]
