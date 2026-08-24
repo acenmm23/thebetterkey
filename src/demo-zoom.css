@@ -1,213 +1,295 @@
-/* Deadbolt demo polish: zoom the mechanism, remove label collisions, and make the physical relationship obvious. */
+/* Deadbolt demo: zoomed mechanical cutaway, minimal labels, explicit physical relationship. */
 
+/* Desktop first: make the mechanism itself explain the product. */
 @media (min-width: 901px) {
   .compact-demo {
-    grid-template-columns: .70fr .82fr 1.48fr;
+    grid-template-columns: .68fr .78fr 1.62fr;
+    gap: 18px;
   }
 
   .compact-lock-zone {
-    height: 250px;
+    height: 272px;
     overflow: visible;
   }
 
-  /* Replace the long floating label with one quiet scene label. */
+  /* Kill the floating title. The scene no longer needs one. */
   .compact-lock-zone > .compact-object-label {
-    left: 8px;
-    top: 2px;
-    width: auto;
-    font-size: 0;
-    letter-spacing: 0;
-    color: transparent;
-    z-index: 10;
+    display: none !important;
   }
 
-  .compact-lock-zone > .compact-object-label::before {
-    content: 'INSIDE VIEW';
-    display: block;
-    color: #8f887d;
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    letter-spacing: .16em;
-    white-space: nowrap;
-  }
-
-  .compact-lock-zone > .compact-object-label::after {
-    content: '';
-  }
-
-  /* Zoom the door slice and pull it left so the scene does not have a huge dead zone. */
+  /* Door slab: rectangular and substantial, not a floating capsule. */
   .compact-lock-zone::before {
-    left: 27%;
-    top: 20px;
-    width: 82px;
-    height: 218px;
-    border-radius: 20px;
+    content: '';
+    position: absolute;
+    left: 31%;
+    top: 8px;
+    width: 118px;
+    height: 256px;
+    border-radius: 11px;
     background:
-      linear-gradient(90deg, rgba(255,255,255,.76), rgba(255,255,255,.24) 16%, rgba(23,23,20,.05) 82%, rgba(23,23,20,.10)),
-      #ded6ca;
+      linear-gradient(90deg,
+        rgba(255,255,255,.76) 0%,
+        rgba(255,255,255,.36) 9%,
+        rgba(238,232,222,.96) 20%,
+        rgba(222,214,202,.98) 78%,
+        rgba(23,23,20,.085) 100%),
+      #ddd4c7;
+    border: 1px solid rgba(23,23,20,.11);
     box-shadow:
-      inset 8px 0 16px rgba(255,255,255,.28),
-      0 16px 30px rgba(45,38,31,.09);
+      inset 10px 0 16px rgba(255,255,255,.30),
+      inset -2px 0 0 rgba(23,23,20,.045),
+      0 20px 38px rgba(53,44,35,.10);
+    z-index: 2;
   }
 
-  /* Contact shadow between the door and the BetterKey housing. */
+  /* Remove the old translucent fake mounting bridge entirely. */
   .compact-lock-zone::after {
-    left: calc(27% + 66px);
-    top: 50%;
-    width: 58px;
-    height: 142px;
-    border-radius: 18px;
-    background: linear-gradient(90deg, rgba(23,23,20,.12), rgba(23,23,20,.02));
+    display: none !important;
   }
 
+  /* BetterKey overlaps the door face so it reads as physically mounted. */
   .compact-device-shell {
-    left: 43%;
-    width: 164px;
-    border-radius: 33px;
+    left: 46%;
+    right: auto;
+    top: 50%;
+    width: 196px;
+    transform: translateY(-50%);
+    border-radius: 38px;
+    z-index: 5;
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.08),
+      -10px 0 20px rgba(23,23,20,.13),
+      0 24px 40px rgba(31,27,23,.20);
+  }
+
+  .compact-demo.is-unlocked .compact-device-shell {
+    transform: translateY(calc(-50% - 1px));
+    box-shadow:
+      inset 0 1px rgba(255,255,255,.08),
+      -10px 0 20px rgba(23,23,20,.13),
+      0 26px 44px rgba(31,27,23,.20),
+      0 0 0 1px rgba(217,255,67,.07);
   }
 
   .compact-device-shell:before {
-    border-radius: 28px;
+    inset: 7px;
+    border-radius: 32px;
   }
 
-  /* Keep the prototype disclosure, but make it a quiet annotation above the housing. */
+  /* One honest note only. */
   .compact-device-shell::after {
-    content: 'BETTERKEY INSIDE · PROTOTYPE';
-    left: 12px;
+    content: 'PROTOTYPE';
+    position: absolute;
+    right: 8px;
+    left: auto;
     top: -17px;
+    color: #9d968b;
+    font-family: 'DM Mono', monospace;
     font-size: 6px;
-    letter-spacing: .09em;
-    color: #9b9489;
+    letter-spacing: .13em;
+    white-space: nowrap;
   }
 
-  /* Make the bolt the clearest moving object in the scene. */
+  .compact-device-logo {
+    left: 18px;
+    top: 15px;
+    font-size: 9px;
+  }
+
+  .compact-device-state {
+    left: 18px;
+    bottom: 15px;
+    font-size: 8px;
+  }
+
+  /* Oversize the bolt so the lock/unlock action is unmistakable. */
   .bolt-status {
-    left: calc(27% - 94px);
+    position: absolute;
+    left: calc(31% - 126px);
     top: 50%;
-    width: 104px;
-    height: 70px;
+    width: 138px;
+    height: 72px;
+    margin: 0;
     transform: translateY(-50%);
+    display: block;
     z-index: 6;
   }
 
   .bolt-track {
-    top: 8px;
-    width: 102px;
-    height: 30px;
-    border-radius: 9px 0 0 9px;
+    position: absolute;
+    right: 0;
+    top: 7px;
+    width: 136px;
+    height: 34px;
+    border-radius: 11px 0 0 11px;
+    background: transparent;
+    overflow: hidden;
+    box-shadow: none;
   }
 
   .bolt-track i {
+    position: absolute;
     left: 4px;
     top: 3px;
-    width: 94px;
-    height: 24px;
-    border-radius: 8px 0 0 8px;
-    background: linear-gradient(180deg,#e4e5e2 0%,#bfc2be 50%,#929892 100%);
+    width: 128px;
+    height: 28px;
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(180deg,#e6e7e4 0%,#c4c7c3 48%,#969c96 100%);
     box-shadow:
-      inset 0 0 0 1px rgba(70,73,69,.13),
-      0 4px 10px rgba(54,54,49,.17);
+      inset 0 0 0 1px rgba(70,73,69,.14),
+      0 5px 12px rgba(54,54,49,.18);
+    transition: transform .36s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .compact-demo.is-locked .bolt-track i {
+    transform: translateX(0);
   }
 
   .compact-demo.is-unlocked .bolt-track i {
-    transform: translateX(80px);
+    transform: translateX(108px);
   }
 
   .bolt-copy {
-    left: -8px;
-    top: 45px;
-    width: 118px;
+    position: absolute;
+    left: 2px;
+    top: 48px;
+    width: 134px;
     text-align: center;
     font-size: 7px;
-    letter-spacing: .11em;
-    color: #7c756b;
-    z-index: 11;
+    letter-spacing: .12em;
+    color: #817a70;
+    white-space: nowrap;
+    z-index: 8;
   }
 }
 
 @media (min-width: 901px) and (max-width: 1150px) {
   .compact-lock-zone::before {
-    left: 25%;
-    width: 74px;
-  }
-
-  .compact-lock-zone::after {
-    left: calc(25% + 60px);
+    left: 29%;
+    width: 106px;
+    height: 236px;
+    top: 18px;
   }
 
   .compact-device-shell {
-    left: 42%;
-    width: 150px;
+    left: 45%;
+    width: 178px;
   }
 
   .bolt-status {
-    left: calc(25% - 86px);
-    width: 96px;
+    left: calc(29% - 112px);
+    width: 124px;
   }
 
   .bolt-track {
-    width: 94px;
+    width: 122px;
   }
 
   .bolt-track i {
-    width: 86px;
+    width: 114px;
   }
 
   .compact-demo.is-unlocked .bolt-track i {
-    transform: translateX(73px);
+    transform: translateX(96px);
+  }
+
+  .bolt-copy {
+    width: 122px;
   }
 }
 
-/* Mobile/tablet: keep the same hierarchy, but center the enlarged mechanism in its own row. */
+/* Tablet/mobile: preserve the same visual hierarchy without floating labels. */
 @media (max-width: 900px) {
   .compact-lock-zone {
     overflow: visible;
   }
 
   .compact-lock-zone > .compact-object-label {
-    left: 4px;
-    top: 0;
-    font-size: 0;
-    color: transparent;
-  }
-
-  .compact-lock-zone > .compact-object-label::before {
-    content: 'INSIDE VIEW';
-    display: block;
-    color: #8f887d;
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    letter-spacing: .16em;
+    display: none !important;
   }
 
   .compact-lock-zone::before {
-    left: 34%;
-    width: 62px;
+    left: 33%;
+    top: 9px;
+    width: 72px;
+    height: 204px;
+    border-radius: 9px;
   }
 
   .compact-lock-zone::after {
-    left: calc(34% + 50px);
+    display: none !important;
   }
 
   .compact-device-shell {
-    left: 49%;
+    left: 48%;
+    width: 144px;
   }
 
   .compact-device-shell::after {
-    content: 'BETTERKEY · PROTOTYPE';
-    top: -16px;
-    left: 8px;
+    content: 'PROTOTYPE';
+    right: 6px;
+    left: auto;
+    top: -15px;
     font-size: 6px;
   }
 
   .bolt-status {
-    left: calc(34% - 72px);
-    width: 82px;
+    left: calc(33% - 82px);
+    width: 92px;
+    height: 58px;
+  }
+
+  .bolt-track {
+    top: 6px;
+    width: 90px;
+    height: 27px;
+  }
+
+  .bolt-track i {
+    left: 3px;
+    top: 3px;
+    width: 84px;
+    height: 21px;
+  }
+
+  .compact-demo.is-unlocked .bolt-track i {
+    transform: translateX(70px);
   }
 
   .bolt-copy {
+    left: -8px;
     top: 39px;
-    left: -10px;
-    width: 108px;
+    width: 104px;
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .compact-lock-zone::before {
+    left: 35%;
+    width: 62px;
+    height: 188px;
+  }
+
+  .compact-device-shell {
+    left: 50%;
+    width: 128px;
+  }
+
+  .bolt-status {
+    left: calc(35% - 72px);
+    width: 82px;
+  }
+
+  .bolt-track {
+    width: 80px;
+  }
+
+  .bolt-track i {
+    width: 74px;
+  }
+
+  .compact-demo.is-unlocked .bolt-track i {
+    transform: translateX(61px);
   }
 }
