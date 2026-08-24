@@ -33,7 +33,6 @@
     animation-timeline: --anti-smart-scroll;
   }
 
-  /* Fast cumulative sweep. The point is to catch the eye, not trap the scroll. */
   .anti-smart-claims span:nth-child(1) {
     animation-range: cover 26% cover 28%;
   }
@@ -116,9 +115,23 @@
   }
 }
 
-/* Hero shrink wrapper. JS only changes CSS variables on this wrapper, never the app root. */
+/* Hero morph: large poster -> one sentence -> exit. */
 .hero-title-scroll {
+  position: relative;
   transform-origin: top left;
+}
+
+.hero-title-poster {
+  transform-origin: top left;
+}
+
+.hero-poster-word,
+.hero-sentence-word {
+  display: inline-block;
+}
+
+.hero-title-sentence {
+  display: none;
 }
 
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
@@ -126,10 +139,45 @@
     position: sticky;
     top: 94px;
     z-index: 5;
-    transform: scale(var(--hero-scale, 1));
-    opacity: var(--hero-opacity, 1);
-    will-change: transform, opacity;
     pointer-events: none;
+  }
+
+  .hero-title-poster {
+    transform: scale(var(--hero-poster-scale, 1));
+    will-change: transform;
+  }
+
+  .hero-poster-word {
+    opacity: var(--word-opacity, 1);
+    transform: translateY(var(--word-y, 0));
+    will-change: opacity, transform;
+  }
+
+  .hero-title-sentence {
+    position: absolute;
+    inset: 2px 0 auto 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    gap: .22em;
+    white-space: nowrap;
+    font-size: clamp(42px, 4.4vw, 66px);
+    line-height: .96;
+    letter-spacing: -.058em;
+    font-weight: 700;
+    opacity: var(--hero-sentence-opacity, 1);
+    will-change: opacity;
+  }
+
+  .hero-sentence-word {
+    opacity: var(--word-opacity, 0);
+    transform: translateY(var(--word-y, 18px));
+    will-change: opacity, transform;
+  }
+
+  .hero-sentence-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink);
   }
 }
 
@@ -138,8 +186,19 @@
   .hero-title-scroll {
     position: relative;
     top: auto;
+  }
+
+  .hero-title-poster {
     transform: none !important;
+  }
+
+  .hero-poster-word {
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-title-sentence {
+    display: none !important;
   }
 
   @supports (animation-timeline: view()) {
@@ -183,8 +242,19 @@
   .hero-title-scroll {
     position: relative;
     top: auto;
+  }
+
+  .hero-title-poster {
     transform: none !important;
+  }
+
+  .hero-poster-word {
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-title-sentence {
+    display: none !important;
   }
 
   .anti-smart {
