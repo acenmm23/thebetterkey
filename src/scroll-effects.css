@@ -95,133 +95,76 @@
 
 /*
   HERO STORY
-  We deliberately use the same native view-timeline system as the pill animation.
-  The React layer may still calculate old CSS variables, but these animations own
-  the actual visual properties on desktop, so the handoff is deterministic.
+  Safe baseline: React only changes CSS variables on this local wrapper.
+  The poster is visible by default. The compact sentence is a separate layer.
 */
 .hero-title-scroll {
   position: relative;
   transform-origin: top left;
 }
 
+.hero-title-poster {
+  transform-origin: top left;
+}
+
+.hero-poster-word,
+.hero-sentence-word {
+  display: inline-block;
+}
+
 .hero-title-sentence {
   display: none;
 }
 
-@supports (animation-timeline: view()) {
-  @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-    .hero {
-      view-timeline-name: --hero-story;
-      view-timeline-axis: block;
-    }
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .hero-title-scroll {
+    position: sticky;
+    top: 96px;
+    z-index: 5;
+    min-height: clamp(330px, 34vw, 545px);
+    pointer-events: none;
+  }
 
-    .hero-title-scroll {
-      position: sticky;
-      top: 96px;
-      z-index: 5;
-      min-height: clamp(330px, 34vw, 545px);
-      pointer-events: none;
-    }
+  .hero-title-poster {
+    transform: scale(var(--hero-poster-scale, 1));
+    will-change: transform;
+  }
 
-    /* Keep the original poster big for a while. It only settles to ~82%, never tiny. */
-    .hero-title-poster {
-      transform-origin: top left;
-      animation: hero-poster-settle 1s linear both;
-      animation-timeline: --hero-story;
-      animation-range: cover 8% cover 29%;
-      will-change: transform, opacity;
-    }
+  .hero-poster-word {
+    opacity: var(--word-opacity, 1);
+    transform: translateY(var(--word-y, 0));
+    will-change: opacity, transform;
+  }
 
-    /* Ignore the old per-word inline scroll variables on the poster. */
-    .hero-poster-word {
-      opacity: 1 !important;
-      transform: none !important;
-    }
+  .hero-title-sentence {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    gap: .205em;
+    width: max-content;
+    max-width: calc(100vw - 90px);
+    white-space: nowrap;
+    font-size: clamp(48px, 4.25vw, 72px);
+    line-height: .96;
+    letter-spacing: -.06em;
+    font-weight: 700;
+    opacity: var(--hero-sentence-opacity, 1);
+    will-change: opacity;
+  }
 
-    /* A real independent compact sentence, not the same poster scaled down. */
-    .hero-title-sentence {
-      position: absolute;
-      left: 0;
-      top: 6px;
-      display: flex;
-      align-items: baseline;
-      flex-wrap: nowrap;
-      gap: .205em;
-      width: max-content;
-      max-width: calc(100vw - 90px);
-      white-space: nowrap;
-      font-size: clamp(48px, 4.25vw, 72px);
-      line-height: .96;
-      letter-spacing: -.06em;
-      font-weight: 700;
-      opacity: 1;
-      animation: hero-sentence-exit 1s linear both;
-      animation-timeline: --hero-story;
-      animation-range: cover 56% cover 65%;
-      will-change: opacity, transform;
-    }
+  .hero-sentence-word {
+    opacity: var(--word-opacity, 0);
+    transform: translateY(var(--word-y, 18px));
+    transition: opacity .12s linear, transform .18s cubic-bezier(.16,1,.3,1);
+    will-change: opacity, transform;
+  }
 
-    .hero-sentence-word {
-      display: inline-block;
-      opacity: 0 !important;
-      transform: translateY(18px) !important;
-      animation: hero-word-arrive 1s cubic-bezier(.16,1,.3,1) both;
-      animation-timeline: --hero-story;
-      will-change: opacity, transform;
-    }
-
-    /* Word-by-word gather into one sentence. */
-    .hero-sentence-word:nth-child(1) { animation-range: cover 31% cover 33.5%; }
-    .hero-sentence-word:nth-child(2) { animation-range: cover 32.5% cover 35%; }
-    .hero-sentence-word:nth-child(3) { animation-range: cover 34% cover 36.5%; }
-    .hero-sentence-word:nth-child(4) { animation-range: cover 35.5% cover 38%; }
-    .hero-sentence-word:nth-child(5) { animation-range: cover 37% cover 39.5%; }
-    .hero-sentence-word:nth-child(6) { animation-range: cover 38.5% cover 41%; }
-    .hero-sentence-word:nth-child(7) { animation-range: cover 40% cover 42.5%; }
-    .hero-sentence-word:nth-child(8) { animation-range: cover 41.5% cover 44%; }
-
-    .hero-sentence-outline {
-      color: transparent;
-      -webkit-text-stroke: 1px var(--ink);
-    }
-
-    @keyframes hero-poster-settle {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      72% {
-        transform: scale(.84);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(.82);
-        opacity: 0;
-      }
-    }
-
-    @keyframes hero-word-arrive {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Completed line hangs around as a strong thought, then leaves before demo takeover. */
-    @keyframes hero-sentence-exit {
-      0%, 64% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-14px);
-      }
-    }
+  .hero-sentence-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink);
   }
 }
 
@@ -235,8 +178,6 @@
 
   .hero-title-poster {
     transform: none !important;
-    opacity: 1 !important;
-    animation: none !important;
   }
 
   .hero-poster-word {
@@ -292,8 +233,6 @@
 
   .hero-title-poster {
     transform: none !important;
-    opacity: 1 !important;
-    animation: none !important;
   }
 
   .hero-poster-word {
