@@ -3,7 +3,7 @@
 @supports (animation-timeline: view()) {
   .anti-smart {
     position: relative;
-    min-height: 170vh;
+    min-height: 122vh;
     padding: 0;
     view-timeline-name: --anti-smart-scroll;
     view-timeline-axis: block;
@@ -33,33 +33,34 @@
     animation-timeline: --anti-smart-scroll;
   }
 
+  /* Fast cumulative sweep. The point is to catch the eye, not trap the scroll. */
   .anti-smart-claims span:nth-child(1) {
-    animation-range: cover 31% cover 37%;
+    animation-range: cover 26% cover 28%;
   }
 
   .anti-smart-claims span:nth-child(2) {
-    animation-range: cover 38% cover 44%;
+    animation-range: cover 28.5% cover 30.5%;
   }
 
   .anti-smart-claims span:nth-child(3) {
-    animation-range: cover 45% cover 51%;
+    animation-range: cover 31% cover 33%;
   }
 
   .anti-smart-claims span:nth-child(4) {
-    animation-range: cover 52% cover 58%;
+    animation-range: cover 33.5% cover 35.5%;
   }
 
   .anti-smart-claims span:nth-child(5) {
     animation-name: anti-pill-finale;
-    animation-range: cover 59% cover 68%;
+    animation-range: cover 36% cover 39%;
   }
 
   .anti-smart-bottom {
     opacity: .38;
-    transform: translateY(12px);
+    transform: translateY(10px);
     animation: anti-copy-arrive 1s linear both;
     animation-timeline: --anti-smart-scroll;
-    animation-range: cover 61% cover 72%;
+    animation-range: cover 38% cover 42%;
   }
 
   @keyframes anti-pill-light {
@@ -70,7 +71,7 @@
       transform: translateY(0) scale(1);
       box-shadow: 0 0 0 rgba(217,255,67,0);
     }
-    72% {
+    62% {
       transform: translateY(-2px) scale(1.025);
     }
     100% {
@@ -90,7 +91,7 @@
       transform: translateY(0) scale(1);
       box-shadow: 0 0 0 rgba(217,255,67,0);
     }
-    68% {
+    58% {
       transform: translateY(-3px) scale(1.05);
     }
     100% {
@@ -106,7 +107,7 @@
   @keyframes anti-copy-arrive {
     from {
       opacity: .38;
-      transform: translateY(12px);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
@@ -115,8 +116,32 @@
   }
 }
 
-/* Keep the mobile section compact instead of forcing a long sticky scroll. */
+/* Hero shrink wrapper. JS only changes CSS variables on this wrapper, never the app root. */
+.hero-title-scroll {
+  transform-origin: top left;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .hero-title-scroll {
+    position: sticky;
+    top: 94px;
+    z-index: 5;
+    transform: scale(var(--hero-scale, 1));
+    opacity: var(--hero-opacity, 1);
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+}
+
+/* Keep mobile compact and leave the hero completely normal. */
 @media (max-width: 900px) {
+  .hero-title-scroll {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   @supports (animation-timeline: view()) {
     .anti-smart {
       min-height: auto;
@@ -155,6 +180,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-title-scroll {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   .anti-smart {
     min-height: auto;
     padding: 110px 0 105px;
