@@ -1,0 +1,213 @@
+/* Deadbolt demo polish: zoom the mechanism, remove label collisions, and make the physical relationship obvious. */
+
+@media (min-width: 901px) {
+  .compact-demo {
+    grid-template-columns: .70fr .82fr 1.48fr;
+  }
+
+  .compact-lock-zone {
+    height: 250px;
+    overflow: visible;
+  }
+
+  /* Replace the long floating label with one quiet scene label. */
+  .compact-lock-zone > .compact-object-label {
+    left: 8px;
+    top: 2px;
+    width: auto;
+    font-size: 0;
+    letter-spacing: 0;
+    color: transparent;
+    z-index: 10;
+  }
+
+  .compact-lock-zone > .compact-object-label::before {
+    content: 'INSIDE VIEW';
+    display: block;
+    color: #8f887d;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: .16em;
+    white-space: nowrap;
+  }
+
+  .compact-lock-zone > .compact-object-label::after {
+    content: '';
+  }
+
+  /* Zoom the door slice and pull it left so the scene does not have a huge dead zone. */
+  .compact-lock-zone::before {
+    left: 27%;
+    top: 20px;
+    width: 82px;
+    height: 218px;
+    border-radius: 20px;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.76), rgba(255,255,255,.24) 16%, rgba(23,23,20,.05) 82%, rgba(23,23,20,.10)),
+      #ded6ca;
+    box-shadow:
+      inset 8px 0 16px rgba(255,255,255,.28),
+      0 16px 30px rgba(45,38,31,.09);
+  }
+
+  /* Contact shadow between the door and the BetterKey housing. */
+  .compact-lock-zone::after {
+    left: calc(27% + 66px);
+    top: 50%;
+    width: 58px;
+    height: 142px;
+    border-radius: 18px;
+    background: linear-gradient(90deg, rgba(23,23,20,.12), rgba(23,23,20,.02));
+  }
+
+  .compact-device-shell {
+    left: 43%;
+    width: 164px;
+    border-radius: 33px;
+  }
+
+  .compact-device-shell:before {
+    border-radius: 28px;
+  }
+
+  /* Keep the prototype disclosure, but make it a quiet annotation above the housing. */
+  .compact-device-shell::after {
+    content: 'BETTERKEY INSIDE · PROTOTYPE';
+    left: 12px;
+    top: -17px;
+    font-size: 6px;
+    letter-spacing: .09em;
+    color: #9b9489;
+  }
+
+  /* Make the bolt the clearest moving object in the scene. */
+  .bolt-status {
+    left: calc(27% - 94px);
+    top: 50%;
+    width: 104px;
+    height: 70px;
+    transform: translateY(-50%);
+    z-index: 6;
+  }
+
+  .bolt-track {
+    top: 8px;
+    width: 102px;
+    height: 30px;
+    border-radius: 9px 0 0 9px;
+  }
+
+  .bolt-track i {
+    left: 4px;
+    top: 3px;
+    width: 94px;
+    height: 24px;
+    border-radius: 8px 0 0 8px;
+    background: linear-gradient(180deg,#e4e5e2 0%,#bfc2be 50%,#929892 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(70,73,69,.13),
+      0 4px 10px rgba(54,54,49,.17);
+  }
+
+  .compact-demo.is-unlocked .bolt-track i {
+    transform: translateX(80px);
+  }
+
+  .bolt-copy {
+    left: -8px;
+    top: 45px;
+    width: 118px;
+    text-align: center;
+    font-size: 7px;
+    letter-spacing: .11em;
+    color: #7c756b;
+    z-index: 11;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1150px) {
+  .compact-lock-zone::before {
+    left: 25%;
+    width: 74px;
+  }
+
+  .compact-lock-zone::after {
+    left: calc(25% + 60px);
+  }
+
+  .compact-device-shell {
+    left: 42%;
+    width: 150px;
+  }
+
+  .bolt-status {
+    left: calc(25% - 86px);
+    width: 96px;
+  }
+
+  .bolt-track {
+    width: 94px;
+  }
+
+  .bolt-track i {
+    width: 86px;
+  }
+
+  .compact-demo.is-unlocked .bolt-track i {
+    transform: translateX(73px);
+  }
+}
+
+/* Mobile/tablet: keep the same hierarchy, but center the enlarged mechanism in its own row. */
+@media (max-width: 900px) {
+  .compact-lock-zone {
+    overflow: visible;
+  }
+
+  .compact-lock-zone > .compact-object-label {
+    left: 4px;
+    top: 0;
+    font-size: 0;
+    color: transparent;
+  }
+
+  .compact-lock-zone > .compact-object-label::before {
+    content: 'INSIDE VIEW';
+    display: block;
+    color: #8f887d;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: .16em;
+  }
+
+  .compact-lock-zone::before {
+    left: 34%;
+    width: 62px;
+  }
+
+  .compact-lock-zone::after {
+    left: calc(34% + 50px);
+  }
+
+  .compact-device-shell {
+    left: 49%;
+  }
+
+  .compact-device-shell::after {
+    content: 'BETTERKEY · PROTOTYPE';
+    top: -16px;
+    left: 8px;
+    font-size: 6px;
+  }
+
+  .bolt-status {
+    left: calc(34% - 72px);
+    width: 82px;
+  }
+
+  .bolt-copy {
+    top: 39px;
+    left: -10px;
+    width: 108px;
+  }
+}
