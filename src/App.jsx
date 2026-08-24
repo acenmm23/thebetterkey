@@ -4,6 +4,7 @@ import betterKeyKey from './assets/betterkey-key.webp'
 import deadboltImg from './assets/deadbolt.webp'
 
 const WAITLIST_URL = 'https://forms.gle/jDQy3swL2g5gwGGq8'
+const HERO_WORDS = ['Your', 'front', 'door', 'should', 'work', 'like', 'your', 'car.']
 
 function NoCloudGraphic() {
   return (
@@ -94,9 +95,11 @@ function Hero() {
 
   useEffect(() => {
     const hero = heroRef.current
-    const titleScroll = titleScrollRef.current
-    if (!hero || !titleScroll) return undefined
+    const stage = titleScrollRef.current
+    if (!hero || !stage) return undefined
 
+    const posterWords = Array.from(stage.querySelectorAll('.hero-poster-word'))
+    const sentenceWords = Array.from(stage.querySelectorAll('.hero-sentence-word'))
     const desktop = window.matchMedia('(min-width: 901px)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let frame = 0
@@ -104,8 +107,16 @@ function Hero() {
     const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value))
 
     const reset = () => {
-      titleScroll.style.removeProperty('--hero-scale')
-      titleScroll.style.removeProperty('--hero-opacity')
+      stage.style.removeProperty('--hero-poster-scale')
+      stage.style.removeProperty('--hero-sentence-opacity')
+      posterWords.forEach(word => {
+        word.style.removeProperty('--word-opacity')
+        word.style.removeProperty('--word-y')
+      })
+      sentenceWords.forEach(word => {
+        word.style.removeProperty('--word-opacity')
+        word.style.removeProperty('--word-y')
+      })
     }
 
     const update = () => {
@@ -117,18 +128,37 @@ function Hero() {
       }
 
       const scrollY = window.scrollY || window.pageYOffset
-      const start = hero.offsetTop + 90
-      const shrinkDistance = Math.min(420, window.innerHeight * 0.5)
-      const shrinkProgress = clamp((scrollY - start) / shrinkDistance)
-      const scale = 1 - (shrinkProgress * 0.73)
+      const start = hero.offsetTop + Math.min(260, window.innerHeight * 0.28)
 
-      const fadeStart = start + shrinkDistance + Math.min(210, window.innerHeight * 0.22)
-      const fadeDistance = Math.min(230, window.innerHeight * 0.28)
-      const fadeProgress = clamp((scrollY - fadeStart) / fadeDistance)
-      const opacity = 1 - fadeProgress
+      // Keep the poster large for longer, then only shrink it modestly.
+      const settleDistance = Math.min(720, window.innerHeight * 0.82)
+      const settleProgress = clamp((scrollY - start) / settleDistance)
+      const posterScale = 1 - (settleProgress * 0.28)
+      stage.style.setProperty('--hero-poster-scale', posterScale.toFixed(4))
 
-      titleScroll.style.setProperty('--hero-scale', scale.toFixed(4))
-      titleScroll.style.setProperty('--hero-opacity', opacity.toFixed(4))
+      // Once the product copy is entering, gather the words into one sentence.
+      const morphStart = start + (settleDistance * 0.52)
+      const morphDistance = Math.min(520, window.innerHeight * 0.62)
+      const morphProgress = clamp((scrollY - morphStart) / morphDistance)
+
+      posterWords.forEach((word, index) => {
+        const progress = clamp((morphProgress * (HERO_WORDS.length + 1.5) - index) / 1.65)
+        word.style.setProperty('--word-opacity', (1 - progress).toFixed(4))
+        word.style.setProperty('--word-y', `${(-10 * progress).toFixed(2)}px`)
+      })
+
+      sentenceWords.forEach((word, index) => {
+        const progress = clamp((morphProgress * (HERO_WORDS.length + 1.5) - index) / 1.65)
+        word.style.setProperty('--word-opacity', progress.toFixed(4))
+        word.style.setProperty('--word-y', `${(18 * (1 - progress)).toFixed(2)}px`)
+      })
+
+      // Hold the completed sentence for a beat, then let it leave before the demo takes over.
+      const morphEnd = morphStart + morphDistance
+      const holdDistance = Math.min(280, window.innerHeight * 0.32)
+      const fadeDistance = Math.min(260, window.innerHeight * 0.30)
+      const fadeProgress = clamp((scrollY - (morphEnd + holdDistance)) / fadeDistance)
+      stage.style.setProperty('--hero-sentence-opacity', (1 - fadeProgress).toFixed(4))
     }
 
     const requestUpdate = () => {
@@ -156,8 +186,26 @@ function Hero() {
     <section className="hero shell" id="top" ref={heroRef}>
       <div className="hero-kicker reveal">A better way through the front door.</div>
       <div className="hero-title-scroll" ref={titleScrollRef}>
-        <h1 className="display hero-title reveal reveal-delay-1">Your front door<br/>should work<br/><em>like your car.</em></h1>
+        <h1 className="display hero-title hero-title-poster reveal reveal-delay-1">
+          <span className="hero-poster-word">Your</span>{' '}
+          <span className="hero-poster-word">front</span>{' '}
+          <span className="hero-poster-word">door</span><br/>
+          <span className="hero-poster-word">should</span>{' '}
+          <span className="hero-poster-word">work</span><br/>
+          <em>
+            <span className="hero-poster-word">like</span>{' '}
+            <span className="hero-poster-word">your</span>{' '}
+            <span className="hero-poster-word">car.</span>
+          </em>
+        </h1>
+
+        <div className="hero-title-sentence" aria-hidden="true">
+          {HERO_WORDS.map((word, index) => (
+            <span key={word + index} className={`hero-sentence-word ${index >= 5 ? 'hero-sentence-outline' : ''}`}>{word}</span>
+          ))}
+        </div>
       </div>
+
       <div className="hero-clarity reveal reveal-delay-2">
         <div className="hero-clarity-copy">
           <span className="eyebrow">THE PRODUCT</span>
