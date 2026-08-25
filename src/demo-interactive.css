@@ -1,0 +1,221 @@
+/* Interactive layer for the approved deadbolt render.
+   The polished render stays as the visual base. We only redraw the pieces
+   that need to change so the existing React locked state can drive them. */
+
+.compact-lock-zone {
+  position: relative;
+  isolation: isolate;
+}
+
+/* demo-zoom intentionally hides the old DOM scene. Bring back only the two
+   dynamic layers we need, and use each as a full-size overlay aligned to the
+   3:2 approved render. */
+.compact-lock-zone > .bolt-status,
+.compact-lock-zone > .compact-device-shell {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  height: 100% !important;
+  width: auto !important;
+  aspect-ratio: 3 / 2;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
+.compact-lock-zone > .bolt-status {
+  z-index: 5;
+}
+
+.compact-lock-zone > .compact-device-shell {
+  z-index: 6;
+}
+
+.compact-device-shell::before,
+.compact-device-shell::after,
+.compact-device-logo {
+  display: none !important;
+}
+
+/* Cover the baked-in bolt + its baked label with a color-matched patch.
+   The patch lives only on the exterior side, so the lock plate and device
+   from the polished render remain untouched. */
+.bolt-status::before {
+  content: '';
+  position: absolute;
+  left: 17.5%;
+  top: 37%;
+  width: 31.5%;
+  height: 30%;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 80% 45%, rgba(226,216,203,.42), transparent 44%),
+    linear-gradient(90deg, #f1e9de 0%, #eee5d9 58%, #ebe1d5 100%);
+}
+
+/* Real animated bolt. It retracts toward the door rather than translating
+   offscreen, which reads much more like an actual deadbolt. */
+.bolt-track {
+  display: block !important;
+  position: absolute !important;
+  left: 27.5% !important;
+  top: 45.2% !important;
+  width: 21.8% !important;
+  height: 10.6% !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.bolt-track i {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform-origin: 100% 50%;
+  border-radius: 999px 8px 8px 999px !important;
+  background:
+    linear-gradient(180deg,
+      #f1f1ed 0%,
+      #d6d5cf 18%,
+      #b8b7b1 51%,
+      #8d8e89 82%,
+      #c9c8c1 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(78,78,73,.20),
+    inset 0 8px 10px rgba(255,255,255,.34),
+    inset 0 -8px 12px rgba(63,62,58,.16),
+    0 5px 13px rgba(50,46,41,.16) !important;
+  transition:
+    transform .46s cubic-bezier(.22,.82,.2,1),
+    filter .46s ease,
+    opacity .28s ease !important;
+}
+
+.bolt-track i::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 3%;
+  width: 19%;
+  height: 94%;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #a4a49f 0%, #eeeeea 58%, #b7b6b0 100%);
+  box-shadow: inset -2px 0 3px rgba(53,53,49,.16);
+}
+
+.compact-demo.is-locked .bolt-track i {
+  transform: scaleX(1) !important;
+  filter: none;
+  opacity: 1;
+}
+
+.compact-demo.is-unlocked .bolt-track i {
+  transform: scaleX(.10) !important;
+  filter: brightness(.93);
+  opacity: .92;
+}
+
+/* Replace the baked-in status text under the bolt with the live React copy. */
+.bolt-copy {
+  display: block !important;
+  position: absolute !important;
+  left: 20% !important;
+  top: 60.8% !important;
+  width: 35% !important;
+  padding: 5px 3px 4px !important;
+  text-align: center !important;
+  color: #827a70 !important;
+  background: rgba(239,231,220,.92) !important;
+  border-radius: 999px;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 2.0% !important;
+  line-height: 1 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase;
+  white-space: nowrap !important;
+  opacity: .96;
+}
+
+/* Use the existing dynamic device state to cover the baked LOCKED state and
+   replace it with the real current state. */
+.compact-device-state {
+  display: flex !important;
+  position: absolute !important;
+  left: 63.3% !important;
+  top: 72.2% !important;
+  bottom: auto !important;
+  right: auto !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-width: 24% !important;
+  padding: 7px 14px 7px 7px !important;
+  color: #c5beb3 !important;
+  background: linear-gradient(90deg, #11110f 0%, #11110f 74%, rgba(17,17,15,.18) 100%) !important;
+  border-radius: 999px !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 2.1% !important;
+  line-height: 1 !important;
+  letter-spacing: .10em !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.compact-device-state i {
+  display: block !important;
+  width: 8px !important;
+  height: 8px !important;
+  flex: 0 0 8px !important;
+  border-radius: 50% !important;
+  background: #d5ff3f !important;
+  box-shadow: 0 0 13px rgba(213,255,63,.70) !important;
+}
+
+/* Give the key press a tactile response. */
+.demo-key-hit {
+  transition: transform .16s ease, filter .16s ease !important;
+}
+
+.demo-key-hit:active {
+  transform: translateY(2px) scale(.985) !important;
+  filter: brightness(.97);
+}
+
+/* A tiny lock-state flash makes the interaction legible without feeling like
+   a videogame animation. */
+.compact-demo.is-unlocked .compact-lock-zone {
+  box-shadow: inset 0 0 0 1px rgba(213,255,63,.08);
+}
+
+@media (max-width: 900px) {
+  .bolt-status::before {
+    left: 17%;
+    width: 32%;
+  }
+
+  .bolt-track {
+    left: 27% !important;
+    width: 22.3% !important;
+  }
+
+  .compact-device-state {
+    left: 63% !important;
+    top: 72% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolt-track i,
+  .demo-key-hit {
+    transition: none !important;
+  }
+}
