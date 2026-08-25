@@ -1,0 +1,198 @@
+/* Feedback pass: hollow display type, fitted mobile product art, aligned cards,
+   and support styles for vertical-scroll-driven horizontal scenes. */
+
+/* No cursive/editorial serif. The memorable phrases use the same BetterKey
+   sans family as the surrounding headline, but as true outline-only type. */
+.display em,
+.why-title em,
+.anti-smart h2 em,
+.value-case h3 em,
+.manifesto-copy i {
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: inherit !important;
+  text-rendering: optimizeLegibility;
+}
+
+.display em,
+.why-title em,
+.anti-smart h2 em {
+  position: static !important;
+  display: inline !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  background: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+}
+
+.display em,
+.why-title em {
+  -webkit-text-stroke: 1.35px var(--ink) !important;
+}
+
+.anti-smart h2 em {
+  -webkit-text-stroke: 1.25px #a9a399 !important;
+}
+
+.display em::after,
+.why-title em::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* The smaller supporting emphasis stays sans and readable, not cursive. */
+.value-case h3 em {
+  color: #7b756b !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  -webkit-text-stroke: 0 !important;
+}
+
+.manifesto-copy i {
+  color: var(--acid) !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  -webkit-text-stroke: 0 !important;
+}
+
+/* Desktop feature cards: reserve equal rows so all three titles land on the
+   same baseline regardless of paragraph length or image proportions. */
+@media (min-width: 901px) {
+  .pillars .pillar,
+  .pillars .pillar:first-child,
+  .pillars .pillar:last-child {
+    display: grid !important;
+    grid-template-rows: 26px 245px 1fr !important;
+    align-content: stretch !important;
+    justify-content: initial !important;
+  }
+
+  .pillars .pillar-visual {
+    height: 225px !important;
+    margin: 10px 0 10px !important;
+    align-self: center;
+  }
+
+  .pillars .pillar > div:last-child {
+    align-self: start !important;
+  }
+}
+
+@media (max-width: 900px) {
+  /* The deadbolt source art is wide. Match the viewport to the art instead of
+     using cover, which was cropping the bolt and knob off the sides. */
+  .compact-lock-zone {
+    width: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: 2.28 / 1 !important;
+    align-self: center !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #efe6da !important;
+  }
+
+  /* Vertical scroll drives these rows horizontally. The row is pinned only
+     for the amount of travel required to reveal the remaining cards. */
+  .mobile-hscene {
+    position: relative;
+    width: 100%;
+  }
+
+  .mobile-hscene--values {
+    margin-top: 34px;
+  }
+
+  .mobile-hscene-sticky {
+    position: sticky;
+    top: 88px;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .mobile-hscene .value-split,
+  .mobile-hscene .pillars {
+    margin-top: 0 !important;
+    scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mobile-hscene .value-case,
+  .mobile-hscene .pillar {
+    scroll-snap-align: none !important;
+  }
+
+  /* Keep the first V1 build image fully visible. Small and complete looks
+     much more intentional than a larger crop. */
+  .build-card-a .prototype-sketch {
+    position: relative !important;
+    min-height: 118px !important;
+    overflow: hidden !important;
+  }
+
+  .build-card-a .sketch-device {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(40%, 108px) !important;
+    max-width: 108px !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .display em,
+  .why-title em {
+    -webkit-text-stroke-width: 1.05px !important;
+  }
+
+  .anti-smart h2 em {
+    -webkit-text-stroke-width: 1px !important;
+  }
+
+  /* Keep the full deadbolt render compact enough to read in the same glance
+     as the key. */
+  .compact-demo {
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr) !important;
+  }
+
+  .compact-lock-zone {
+    aspect-ratio: 2.28 / 1 !important;
+    min-height: 0 !important;
+  }
+
+  .mobile-hscene--values {
+    margin-top: 28px;
+  }
+
+  .mobile-hscene-sticky {
+    top: 82px;
+  }
+
+  .build-card-a .prototype-sketch {
+    min-height: 106px !important;
+  }
+
+  .build-card-a .sketch-device {
+    width: min(36%, 92px) !important;
+    max-width: 92px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-hscene-sticky {
+    position: relative !important;
+    top: auto !important;
+  }
+}
