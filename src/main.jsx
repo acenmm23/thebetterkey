@@ -16,7 +16,9 @@ import './demo-unlocked-image.css'
 import './layout-fixes.css'
 import './mobile-ux.css'
 import './polish-pass.css'
+import './feedback-fixes.css'
 import { initBrandMotion } from './brand-motion.js'
+import { initMobileHorizontalScroll } from './mobile-horizontal-scroll.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -28,5 +30,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // frame before querying the DOM for motion targets so the animation system is
 // deterministic on both fast and slow devices.
 window.requestAnimationFrame(() => {
-  window.requestAnimationFrame(initBrandMotion)
+  window.requestAnimationFrame(() => {
+    initBrandMotion()
+    initMobileHorizontalScroll()
+  })
 })
