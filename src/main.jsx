@@ -14,6 +14,7 @@ import './product-tease.css'
 import './demo-locked-image.css'
 import './demo-unlocked-image.css'
 import './layout-fixes.css'
+import './mobile-ux.css'
 import { initBrandMotion } from './brand-motion.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
