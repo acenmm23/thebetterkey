@@ -1,0 +1,680 @@
+/* Mobile-first experience layer.
+   Everything in this file is scoped to <= 900px so the desktop experience stays unchanged. */
+
+@media (max-width: 900px) {
+  html {
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  a,
+  button,
+  input {
+    touch-action: manipulation;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .shell {
+    width: calc(100% - 32px);
+    max-width: 1400px;
+  }
+
+  #top,
+  #why,
+  #how,
+  #build,
+  #waitlist {
+    scroll-margin-top: 92px;
+  }
+
+  /* Mobile header: smaller visual footprint, full-size touch target. */
+  .nav-wrap {
+    padding: max(10px, env(safe-area-inset-top)) 0 0;
+  }
+
+  .nav {
+    height: 54px;
+    border-radius: 16px;
+    padding: 0 10px 0 16px;
+    box-shadow: 0 7px 26px rgba(23, 23, 20, .06);
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .nav-cta,
+  .outline-link,
+  .text-link,
+  .waitlist button {
+    min-height: 44px;
+  }
+
+  /* Hero: same message as desktop, tuned to be understood in one phone viewport. */
+  .hero {
+    padding-top: calc(118px + env(safe-area-inset-top));
+    padding-bottom: 72px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 20px;
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .display {
+    font-size: clamp(54px, 12.5vw, 82px);
+    line-height: .88;
+    letter-spacing: -.065em;
+    max-width: 100%;
+  }
+
+  .hero-clarity {
+    margin: 30px 0 30px;
+  }
+
+  .hero-clarity-copy h2 {
+    margin-top: 9px;
+    font-size: clamp(34px, 8vw, 50px);
+    line-height: .98;
+    letter-spacing: -.052em;
+  }
+
+  .hero-clarity-copy p {
+    max-width: 38rem;
+    font-size: 16px;
+    line-height: 1.58;
+  }
+
+  .hero-clarity .text-link {
+    width: max-content;
+    padding: 0 2px;
+    margin-top: 14px;
+  }
+
+  /* Product demo: prioritize the tap target and make the state legible. */
+  .compact-demo {
+    border-radius: 24px;
+    padding: 26px 22px 30px;
+    gap: 24px;
+    box-shadow: 0 18px 48px rgba(58, 48, 38, .09);
+  }
+
+  .compact-demo-copy {
+    gap: 18px;
+  }
+
+  .compact-demo-copy h3 {
+    line-height: 1;
+  }
+
+  .compact-demo-copy p {
+    line-height: 1.5;
+  }
+
+  .demo-key-hit {
+    min-height: 44px;
+  }
+
+  .compact-key-zone,
+  .compact-lock-zone {
+    min-width: 0;
+  }
+
+  .compact-lock-zone {
+    border-radius: 18px;
+    min-height: 240px;
+  }
+
+  .bolt-status {
+    margin-bottom: 2px;
+  }
+
+  /* Body rhythm: shorter sections, clearer hierarchy, comfortable reading width. */
+  .section {
+    padding: 88px 0;
+  }
+
+  .section-head {
+    gap: 18px;
+    margin-bottom: 44px;
+  }
+
+  .section-title {
+    font-size: clamp(40px, 9.5vw, 58px);
+    line-height: .98;
+    letter-spacing: -.055em;
+  }
+
+  .why-better {
+    padding: 88px 0 96px;
+  }
+
+  .why-intro {
+    padding-top: 22px;
+    gap: 20px;
+  }
+
+  .why-title {
+    font-size: clamp(46px, 10.5vw, 68px);
+    line-height: .94;
+    letter-spacing: -.062em;
+  }
+
+  .why-intro-main > p,
+  .situational-note p {
+    max-width: 40rem;
+    font-size: 16px;
+    line-height: 1.62;
+  }
+
+  .approach-panel {
+    margin-top: 48px;
+    border-radius: 22px;
+    padding: 26px 22px 28px;
+  }
+
+  .approach-message {
+    margin-top: 30px;
+    font-size: clamp(42px, 9.6vw, 62px);
+    line-height: .98;
+  }
+
+  .approach-flow {
+    margin-top: 30px;
+    gap: 9px;
+  }
+
+  .value-split {
+    margin-top: 50px;
+  }
+
+  .value-case {
+    min-height: 0;
+    padding: 28px 0 32px;
+  }
+
+  .value-case + .value-case {
+    padding: 28px 0 32px;
+  }
+
+  .value-case h3 {
+    margin: 34px 0 18px;
+    font-size: clamp(40px, 9.5vw, 58px);
+  }
+
+  .value-case p {
+    max-width: 38rem;
+    font-size: 16px;
+    line-height: 1.62;
+  }
+
+  .situational-note {
+    margin-top: 30px;
+    padding: 24px 0;
+  }
+
+  .why-statement {
+    margin-top: 42px;
+  }
+
+  .why-statement > div {
+    font-size: clamp(38px, 9vw, 54px);
+  }
+
+  .why-statement p {
+    max-width: 34rem;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  .anti-smart {
+    padding: 82px 0 78px;
+  }
+
+  .anti-smart-kicker {
+    gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  .anti-smart-kicker p,
+  .anti-smart-bottom > p {
+    max-width: 38rem;
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .anti-smart h2 {
+    margin: 42px 0 34px;
+    font-size: clamp(56px, 12vw, 82px);
+    line-height: .9;
+  }
+
+  .anti-smart-claims {
+    gap: 8px;
+    margin-bottom: 44px;
+  }
+
+  .anti-smart-bottom {
+    gap: 30px;
+    padding-top: 28px;
+  }
+
+  .monthly-bill-punch strong {
+    font-size: clamp(32px, 7.4vw, 46px);
+    line-height: 1.04;
+  }
+
+  .pillars {
+    border-bottom: 0;
+  }
+
+  .pillar {
+    min-height: 0;
+    padding: 28px 0 32px;
+  }
+
+  .pillar-visual {
+    height: 170px;
+    margin: 12px 0 18px;
+  }
+
+  .pillar h3 {
+    font-size: 24px;
+  }
+
+  .pillar p {
+    max-width: 38rem;
+    font-size: 15.5px;
+    line-height: 1.62;
+  }
+
+  .manifesto {
+    padding: 90px 0;
+  }
+
+  .manifesto-inner {
+    gap: 26px;
+  }
+
+  .manifesto-copy {
+    font-size: clamp(44px, 10vw, 64px);
+    line-height: 1.04;
+  }
+
+  .build-grid {
+    gap: 44px;
+  }
+
+  .build-copy p {
+    max-width: 38rem;
+    margin: 22px 0 25px;
+    font-size: 16px;
+    line-height: 1.62;
+  }
+
+  .outline-link {
+    padding: 0 16px;
+  }
+
+  .waitlist {
+    padding: 92px 0 86px;
+  }
+
+  .waitlist-inner {
+    gap: 42px;
+  }
+
+  .waitlist h2 {
+    font-size: clamp(58px, 12vw, 84px);
+  }
+
+  .waitlist-right p {
+    max-width: 38rem;
+    font-size: 16px;
+  }
+
+  .waitlist input {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  .footer-inner {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    width: calc(100% - 30px);
+  }
+
+  /* On phones, the one primary action follows the user without crowding the header. */
+  .nav {
+    padding-right: 16px;
+  }
+
+  .nav-links {
+    gap: 0;
+  }
+
+  .nav-cta {
+    position: fixed;
+    z-index: 60;
+    left: 15px;
+    right: 15px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    height: 54px;
+    min-height: 54px;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 16px !important;
+    box-shadow: 0 14px 34px rgba(23, 23, 20, .24);
+    font-size: 14px;
+  }
+
+  body:has(input:focus) .nav-cta {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero {
+    padding-top: calc(108px + env(safe-area-inset-top));
+    padding-bottom: 58px;
+  }
+
+  .hero-kicker {
+    max-width: 26rem;
+    margin-bottom: 18px;
+  }
+
+  .display {
+    font-size: clamp(48px, 15vw, 67px);
+    line-height: .9;
+    letter-spacing: -.062em;
+  }
+
+  .hero-clarity {
+    margin: 28px 0 26px;
+  }
+
+  .hero-clarity-copy h2 {
+    font-size: clamp(32px, 9.5vw, 40px);
+    line-height: 1;
+  }
+
+  .hero-clarity-copy p {
+    font-size: 15.5px;
+    line-height: 1.58;
+  }
+
+  .compact-demo {
+    padding: 22px 16px 24px;
+    gap: 20px;
+    border-radius: 22px;
+  }
+
+  .compact-demo-copy h3 {
+    margin-top: 8px;
+    font-size: 30px;
+  }
+
+  .compact-demo-copy p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .compact-object-label {
+    margin-bottom: 8px;
+  }
+
+  .demo-key-hit {
+    width: min(76vw, 270px);
+  }
+
+  .click-nudge {
+    margin-top: 6px;
+  }
+
+  .compact-lock-zone {
+    width: 100%;
+    min-height: 255px;
+    border-radius: 16px;
+  }
+
+  .compact-device-shell {
+    width: min(52vw, 188px);
+  }
+
+  .section {
+    padding: 74px 0;
+  }
+
+  .section-head {
+    margin-bottom: 34px;
+  }
+
+  .section-title {
+    font-size: clamp(38px, 11vw, 48px);
+  }
+
+  .why-better {
+    padding: 72px 0 80px;
+  }
+
+  .why-title {
+    font-size: clamp(44px, 13vw, 58px);
+  }
+
+  .why-intro-main > p {
+    margin-top: 20px;
+    font-size: 15.5px;
+  }
+
+  .approach-panel {
+    margin-top: 40px;
+    padding: 22px 18px 24px;
+    border-radius: 20px;
+  }
+
+  .approach-message {
+    margin-top: 26px;
+    font-size: clamp(38px, 12vw, 50px);
+  }
+
+  .approach-flow {
+    margin-top: 26px;
+    font-size: 15px;
+  }
+
+  .approach-panel > p {
+    margin-top: 20px;
+  }
+
+  .value-split {
+    margin-top: 42px;
+  }
+
+  .value-case,
+  .value-case + .value-case {
+    padding: 24px 0 28px;
+  }
+
+  .value-case h3 {
+    margin: 28px 0 16px;
+    font-size: clamp(37px, 11vw, 47px);
+  }
+
+  .value-case p,
+  .situational-note p {
+    font-size: 15.5px;
+  }
+
+  .situational-note {
+    margin-top: 26px;
+    gap: 12px;
+    padding: 22px 0;
+  }
+
+  .why-statement {
+    margin-top: 34px;
+  }
+
+  .why-statement > div {
+    font-size: clamp(34px, 10.5vw, 44px);
+  }
+
+  .anti-smart {
+    padding: 70px 0 68px;
+  }
+
+  .anti-smart h2 {
+    margin: 36px 0 30px;
+    font-size: clamp(51px, 15vw, 66px);
+  }
+
+  .anti-smart-claims {
+    margin-bottom: 38px;
+  }
+
+  .anti-smart-claims span {
+    padding: 9px 11px;
+    font-size: 9px;
+  }
+
+  .monthly-bill-punch strong {
+    font-size: clamp(30px, 9vw, 38px);
+  }
+
+  .pillar {
+    padding: 24px 0 28px;
+  }
+
+  .pillar-visual {
+    height: 145px;
+    margin: 8px 0 14px;
+  }
+
+  .pillar-key {
+    height: 145px;
+  }
+
+  .pillar-deadbolt {
+    width: 145px;
+    height: 145px;
+  }
+
+  .pillar-cloud-svg {
+    width: 155px;
+  }
+
+  .manifesto {
+    padding: 76px 0;
+  }
+
+  .manifesto-inner {
+    gap: 22px;
+  }
+
+  .manifesto-copy {
+    font-size: clamp(40px, 12vw, 50px);
+  }
+
+  .build-grid {
+    gap: 34px;
+  }
+
+  .build-board {
+    margin-inline: 0;
+  }
+
+  .build-card {
+    height: 235px;
+    border-radius: 18px;
+  }
+
+  .build-card-a {
+    height: 310px;
+  }
+
+  .build-card-a .prototype-sketch {
+    min-height: 205px !important;
+  }
+
+  .waitlist {
+    padding: 76px 0 70px;
+  }
+
+  .waitlist-inner {
+    gap: 34px;
+  }
+
+  .waitlist h2 {
+    font-size: clamp(52px, 15vw, 64px);
+    line-height: .88;
+  }
+
+  .waitlist form {
+    margin-top: 4px;
+  }
+
+  .waitlist input {
+    padding: 14px 4px;
+    margin-bottom: 12px;
+    border-radius: 0;
+  }
+
+  .waitlist button {
+    min-height: 52px;
+    border-radius: 14px;
+  }
+
+  .waitlist small {
+    max-width: 30rem;
+    line-height: 1.45;
+  }
+
+  .footer {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+
+  .footer-inner {
+    padding-top: 24px;
+  }
+
+  .footer-meta {
+    gap: 14px 18px;
+    margin-top: 16px;
+    line-height: 1.45;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .demo-key-hit:hover,
+  .outline-link:hover,
+  .nav-links > a:not(.nav-cta):hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
