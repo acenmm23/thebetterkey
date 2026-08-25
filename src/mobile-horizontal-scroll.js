@@ -9,6 +9,7 @@ export function initMobileHorizontalScroll() {
   let scenes = []
   let raf = 0
   let resizeTimer = 0
+  let lastWidth = window.innerWidth
 
   const unwrapScene = (entry) => {
     const { row, scene, parent, nextSibling } = entry
@@ -101,14 +102,31 @@ export function initMobileHorizontalScroll() {
   }
 
   const handleResize = () => {
+    const nextWidth = window.innerWidth
+
+    // Mobile Safari changes viewport height as its browser chrome expands and
+    // collapses. Ignore height-only resize events so a scene never rebuilds in
+    // the middle of the user's vertical gesture.
+    if (Math.abs(nextWidth - lastWidth) < 3) return
+    lastWidth = nextWidth
+
     window.clearTimeout(resizeTimer)
     resizeTimer = window.setTimeout(setup, 120)
   }
 
   setup()
+  document.fonts?.ready.then(() => {
+    scenes.forEach(measure)
+    schedule()
+  })
+
   window.addEventListener('scroll', schedule, { passive: true })
   window.addEventListener('resize', handleResize)
-  window.addEventListener('orientationchange', handleResize)
+  window.addEventListener('orientationchange', () => {
+    lastWidth = window.innerWidth
+    window.clearTimeout(resizeTimer)
+    resizeTimer = window.setTimeout(setup, 120)
+  })
   mobile.addEventListener?.('change', setup)
   reduced.addEventListener?.('change', setup)
 }
