@@ -1,4 +1,4 @@
-const clamp01 = (value) => Math.min(1, Math.max(0, value))
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
 export function initMobileHorizontalScroll() {
   if (document.documentElement.dataset.mobileHorizontalReady === 'true') return
@@ -11,8 +11,15 @@ export function initMobileHorizontalScroll() {
   let resizeTimer = 0
   let lastWidth = window.innerWidth
 
+  const cancelSnap = (entry) => {
+    if (!entry.snapRaf) return
+    window.cancelAnimationFrame(entry.snapRaf)
+    entry.snapRaf = 0
+  }
+
   const unwrapScene = (entry) => {
     const { row, scene, parent, nextSibling } = entry
+    cancelSnap(entry)
     row.classList.remove('is-scroll-driven')
     row.scrollLeft = 0
 
@@ -32,14 +39,61 @@ export function initMobileHorizontalScroll() {
 
   const measure = (entry) => {
     const { row, scene, sticky } = entry
+    const cards = Array.from(row.children).filter((child) => child.getBoundingClientRect().width > 0)
     const distance = Math.max(0, row.scrollWidth - row.clientWidth)
     const rowHeight = Math.ceil(row.getBoundingClientRect().height)
-    const travel = Math.max(1, Math.round(distance * 0.72))
+    const firstOffset = cards[0]?.offsetLeft || 0
+    const targets = cards.map((card) => clamp(card.offsetLeft - firstOffset, 0, distance))
+
+    if (targets.length > 1) targets[targets.length - 1] = distance
+
+    // Each card gets one short vertical beat. The card itself moves in a fast
+    // horizontal snap, rather than tracking every pixel of the user's scroll.
+    const stepTravel = Math.round(clamp(window.innerHeight * 0.17, 118, 154))
+    const travel = Math.max(0, stepTravel * Math.max(0, targets.length - 1))
 
     entry.distance = distance
+    entry.targets = targets
+    entry.stepTravel = stepTravel
     entry.travel = travel
     scene.style.height = `${Math.max(rowHeight, rowHeight + travel)}px`
     sticky.style.minHeight = `${rowHeight}px`
+
+    const safeIndex = clamp(entry.currentIndex || 0, 0, Math.max(0, targets.length - 1))
+    entry.currentIndex = safeIndex
+    row.scrollLeft = targets[safeIndex] || 0
+  }
+
+  const snapTo = (entry, index) => {
+    const target = entry.targets[index]
+    if (target == null) return
+
+    cancelSnap(entry)
+    const start = entry.row.scrollLeft
+    const delta = target - start
+
+    if (Math.abs(delta) < 1) {
+      entry.row.scrollLeft = target
+      return
+    }
+
+    const duration = 145
+    const started = performance.now()
+
+    const frame = (now) => {
+      const t = clamp((now - started) / duration, 0, 1)
+      const eased = 1 - Math.pow(1 - t, 4)
+      entry.row.scrollLeft = start + delta * eased
+
+      if (t < 1) {
+        entry.snapRaf = window.requestAnimationFrame(frame)
+      } else {
+        entry.row.scrollLeft = target
+        entry.snapRaf = 0
+      }
+    }
+
+    entry.snapRaf = window.requestAnimationFrame(frame)
   }
 
   const createScene = (selector, modifier) => {
@@ -59,7 +113,19 @@ export function initMobileHorizontalScroll() {
     row.classList.add('is-scroll-driven')
     row.scrollLeft = 0
 
-    const entry = { row, scene, sticky, parent, nextSibling, distance: 0, travel: 1 }
+    const entry = {
+      row,
+      scene,
+      sticky,
+      parent,
+      nextSibling,
+      distance: 0,
+      targets: [],
+      stepTravel: 130,
+      travel: 0,
+      currentIndex: 0,
+      snapRaf: 0,
+    }
     measure(entry)
     return entry
   }
@@ -68,12 +134,12 @@ export function initMobileHorizontalScroll() {
     teardown()
     if (!mobile.matches || reduced.matches) return
 
-    const nextScenes = [
+    scenes = [
       createScene('.value-split', 'mobile-hscene--values'),
       createScene('.pillars', 'mobile-hscene--pillars'),
+      createScene('.build-board', 'mobile-hscene--build'),
     ].filter(Boolean)
 
-    scenes = nextScenes
     scenes.forEach(measure)
     update()
   }
@@ -85,14 +151,22 @@ export function initMobileHorizontalScroll() {
     const scrollY = window.scrollY
 
     scenes.forEach((entry) => {
-      const { row, scene, sticky, distance, travel } = entry
-      if (distance <= 0) return
+      if (entry.targets.length <= 1) return
 
-      const stickyTop = Number.parseFloat(window.getComputedStyle(sticky).top) || 0
-      const sceneTop = scene.getBoundingClientRect().top + scrollY
+      const stickyTop = Number.parseFloat(window.getComputedStyle(entry.sticky).top) || 0
+      const sceneTop = entry.scene.getBoundingClientRect().top + scrollY
       const start = sceneTop - stickyTop
-      const progress = clamp01((scrollY - start) / travel)
-      row.scrollLeft = progress * distance
+      const localTravel = scrollY - start
+      const nextIndex = clamp(
+        Math.round(localTravel / Math.max(1, entry.stepTravel)),
+        0,
+        entry.targets.length - 1,
+      )
+
+      if (nextIndex !== entry.currentIndex) {
+        entry.currentIndex = nextIndex
+        snapTo(entry, nextIndex)
+      }
     })
   }
 
@@ -104,9 +178,8 @@ export function initMobileHorizontalScroll() {
   const handleResize = () => {
     const nextWidth = window.innerWidth
 
-    // Mobile Safari changes viewport height as its browser chrome expands and
-    // collapses. Ignore height-only resize events so a scene never rebuilds in
-    // the middle of the user's vertical gesture.
+    // Ignore Safari's height-only browser-chrome resize events so a pinned
+    // scene never reconstructs mid-gesture.
     if (Math.abs(nextWidth - lastWidth) < 3) return
     lastWidth = nextWidth
 
