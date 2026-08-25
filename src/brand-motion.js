@@ -90,10 +90,13 @@ export function initBrandMotion() {
 
   const updateWhyStatement = () => {
     if (!whyStatement || !keepPhrase || !addPhrase) return
-    // Same binary snap, reached with about 20% less scroll travel.
     const p = sectionProgress(whyStatement, 0.82, 0.47)
 
-    const showAddOption = p >= 0.50
+    // Phone users spend less physical scroll distance on this compact block,
+    // so let "Keep the key." own the highlight longer before handing it off.
+    const mobile = window.matchMedia('(max-width: 900px)').matches
+    const handoffPoint = mobile ? 0.72 : 0.50
+    const showAddOption = p >= handoffPoint
     keepPhrase.classList.toggle('is-motion-active', !showAddOption)
     addPhrase.classList.toggle('is-motion-active', showAddOption)
   }
