@@ -125,11 +125,22 @@
     scroll-snap-align: none !important;
   }
 
-  /* Keep the first V1 build image fully visible. Small and complete looks
-     much more intentional than a larger crop. */
+  /* Keep the first V1 build image fully visible. The old desktop inset was
+     still shifting the mobile sketch downward, so reset its positioning before
+     centering the smaller complete prototype. */
   .build-card-a .prototype-sketch {
     position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
     min-height: 118px !important;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: hidden !important;
   }
 
