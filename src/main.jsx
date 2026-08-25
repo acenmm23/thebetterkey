@@ -11,6 +11,7 @@ import './demo-zoom.css'
 import './demo-mesh.css'
 import './demo-interactive.css'
 import './product-tease.css'
+import './demo-final-images.css'
 import { initBrandMotion } from './brand-motion.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
