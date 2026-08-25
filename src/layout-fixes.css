@@ -1,0 +1,36 @@
+/* Final layout fixes: keep the demo reliable and center the V1 prototype. */
+
+.compact-lock-zone {
+  background-color: #efe6da !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.build-card-a .prototype-sketch {
+  position: relative !important;
+  display: block !important;
+  min-height: 250px !important;
+  overflow: hidden !important;
+}
+
+.build-card-a .sketch-device {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  width: min(68%, 285px) !important;
+  max-width: 285px !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  transform: translate(-50%, -50%) !important;
+  background-position: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+
+.build-card-a .sketch-device > * {
+  display: none !important;
+}
