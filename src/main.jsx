@@ -10,6 +10,7 @@ import './demo-refresh.css'
 import './demo-zoom.css'
 import './demo-interactive.css'
 import './demo-mesh.css'
+import './product-tease.css'
 import { initBrandMotion } from './brand-motion.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
