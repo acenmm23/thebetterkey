@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="thebetterkey logo">
+  <rect width="512" height="512" rx="128" fill="#f2ebdf"/>
+  <circle cx="168" cy="216" r="88" fill="#171512"/>
+  <circle cx="168" cy="216" r="32" fill="#f2ebdf"/>
+  <path d="M240 192h200a24 24 0 0 1 24 24v16a24 24 0 0 1-24 24h-40v56a24 24 0 0 1-24 24h-24a24 24 0 0 1-24-24v-56h-88z" fill="#171512"/>
+</svg>
