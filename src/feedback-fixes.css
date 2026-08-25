@@ -1,8 +1,9 @@
-/* Feedback pass: hollow display type, fitted mobile product art, aligned cards,
-   and support styles for vertical-scroll-driven horizontal scenes. */
+/* Feedback pass: clean hollow display type, fitted mobile product art, aligned cards,
+   and support styles for snap-driven horizontal scenes. */
 
-/* No cursive/editorial serif. The memorable phrases use the same BetterKey
-   sans family as the surrounding headline, but as true outline-only type. */
+/* Same BetterKey headline family, same weight, same scale. The only change is
+   fill -> outline. Keep the outlined phrase on its own clean line so the stroke
+   never collides with the solid line above it. */
 .display em,
 .why-title em,
 .anti-smart h2 em,
@@ -18,23 +19,27 @@
 .why-title em,
 .anti-smart h2 em {
   position: static !important;
-  display: inline !important;
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: .075em 0 0 !important;
   padding: 0 !important;
   font-size: inherit !important;
   font-weight: inherit !important;
-  line-height: inherit !important;
+  line-height: .98 !important;
   background: none !important;
   box-shadow: none !important;
   color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 .display em,
 .why-title em {
-  -webkit-text-stroke: 1.35px var(--ink) !important;
+  -webkit-text-stroke: 1.45px var(--ink) !important;
 }
 
 .anti-smart h2 em {
-  -webkit-text-stroke: 1.25px #a9a399 !important;
+  -webkit-text-stroke: 1.35px #aaa49a !important;
 }
 
 .display em::after,
@@ -43,12 +48,13 @@
   display: none !important;
 }
 
-/* The smaller supporting emphasis stays sans and readable, not cursive. */
+/* Supporting emphasis stays normal sans, not cursive. */
 .value-case h3 em {
   color: #7b756b !important;
   font-weight: inherit !important;
   line-height: inherit !important;
   -webkit-text-stroke: 0 !important;
+  -webkit-text-fill-color: currentColor !important;
 }
 
 .manifesto-copy i {
@@ -56,10 +62,10 @@
   font-weight: inherit !important;
   line-height: inherit !important;
   -webkit-text-stroke: 0 !important;
+  -webkit-text-fill-color: currentColor !important;
 }
 
-/* Desktop feature cards: reserve equal rows so all three titles land on the
-   same baseline regardless of paragraph length or image proportions. */
+/* Desktop feature cards: equal visual/text rows so all three titles align. */
 @media (min-width: 901px) {
   .pillars .pillar,
   .pillars .pillar:first-child,
@@ -82,9 +88,11 @@
 }
 
 @media (max-width: 900px) {
-  /* The deadbolt source art is wide. Match the viewport to the art instead of
-     using cover, which was cropping the bolt and knob off the sides. */
-  .compact-lock-zone {
+  /* Override the LOCKED/UNLOCKED state selectors directly. Those files use
+     background-size: cover !important and are more specific than a plain
+     .compact-lock-zone rule, which is why the previous mobile fix lost. */
+  .compact-demo.is-locked .compact-lock-zone,
+  .compact-demo.is-unlocked .compact-lock-zone {
     width: 100% !important;
     min-height: 0 !important;
     aspect-ratio: 2.28 / 1 !important;
@@ -95,8 +103,8 @@
     background-color: #efe6da !important;
   }
 
-  /* Vertical scroll drives these rows horizontally. The row is pinned only
-     for the amount of travel required to reveal the remaining cards. */
+  /* Snap scenes: vertical movement chooses a card, then the row makes one fast
+     horizontal move and settles. No continuous sideways crawling. */
   .mobile-hscene {
     position: relative;
     width: 100%;
@@ -114,7 +122,8 @@
   }
 
   .mobile-hscene .value-split,
-  .mobile-hscene .pillars {
+  .mobile-hscene .pillars,
+  .mobile-hscene .build-board {
     margin-top: 0 !important;
     scroll-snap-type: none !important;
     scroll-behavior: auto !important;
@@ -122,13 +131,17 @@
   }
 
   .mobile-hscene .value-case,
-  .mobile-hscene .pillar {
+  .mobile-hscene .pillar,
+  .mobile-hscene .build-card {
     scroll-snap-align: none !important;
   }
 
-  /* Keep the first V1 build image fully visible. The old desktop inset was
-     still shifting the mobile sketch downward, so reset its positioning before
-     centering the smaller complete prototype. */
+  /* Build scene should feel like the other snap rows, not a separate carousel. */
+  .mobile-hscene--build {
+    margin-top: 2px;
+  }
+
+  /* Keep the complete V1 prototype centered and comfortably inside its card. */
   .build-card-a .prototype-sketch {
     position: relative !important;
     inset: auto !important;
@@ -165,23 +178,33 @@
 
 @media (max-width: 600px) {
   .display em,
+  .why-title em,
+  .anti-smart h2 em {
+    margin-top: .10em !important;
+    line-height: 1 !important;
+  }
+
+  .display em,
   .why-title em {
-    -webkit-text-stroke-width: 1.05px !important;
+    -webkit-text-stroke-width: 1.15px !important;
   }
 
   .anti-smart h2 em {
-    -webkit-text-stroke-width: 1px !important;
+    -webkit-text-stroke-width: 1.05px !important;
   }
 
-  /* Keep the full deadbolt render compact enough to read in the same glance
-     as the key. */
+  /* Give the deadbolt enough horizontal room to show the entire 2.28:1 render
+     while keeping the demo compact beside the key. */
   .compact-demo {
-    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr) !important;
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr) !important;
   }
 
-  .compact-lock-zone {
+  .compact-demo.is-locked .compact-lock-zone,
+  .compact-demo.is-unlocked .compact-lock-zone {
     aspect-ratio: 2.28 / 1 !important;
     min-height: 0 !important;
+    background-size: contain !important;
+    background-position: center center !important;
   }
 
   .mobile-hscene--values {
