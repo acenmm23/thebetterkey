@@ -33,9 +33,11 @@ export function initMobileHorizontalScroll() {
     const { row, scene, sticky } = entry
     const distance = Math.max(0, row.scrollWidth - row.clientWidth)
     const rowHeight = Math.ceil(row.getBoundingClientRect().height)
+    const travel = Math.max(1, Math.round(distance * 0.72))
 
     entry.distance = distance
-    scene.style.height = `${Math.max(rowHeight, rowHeight + distance)}px`
+    entry.travel = travel
+    scene.style.height = `${Math.max(rowHeight, rowHeight + travel)}px`
     sticky.style.minHeight = `${rowHeight}px`
   }
 
@@ -56,7 +58,7 @@ export function initMobileHorizontalScroll() {
     row.classList.add('is-scroll-driven')
     row.scrollLeft = 0
 
-    const entry = { row, scene, sticky, parent, nextSibling, distance: 0 }
+    const entry = { row, scene, sticky, parent, nextSibling, distance: 0, travel: 1 }
     measure(entry)
     return entry
   }
@@ -82,13 +84,13 @@ export function initMobileHorizontalScroll() {
     const scrollY = window.scrollY
 
     scenes.forEach((entry) => {
-      const { row, scene, sticky, distance } = entry
+      const { row, scene, sticky, distance, travel } = entry
       if (distance <= 0) return
 
       const stickyTop = Number.parseFloat(window.getComputedStyle(sticky).top) || 0
       const sceneTop = scene.getBoundingClientRect().top + scrollY
       const start = sceneTop - stickyTop
-      const progress = clamp01((scrollY - start) / distance)
+      const progress = clamp01((scrollY - start) / travel)
       row.scrollLeft = progress * distance
     })
   }
