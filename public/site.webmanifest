@@ -1,0 +1,17 @@
+{
+  "name": "thebetterkey",
+  "short_name": "thebetterkey",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f2ebdf",
+  "theme_color": "#f2ebdf",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
