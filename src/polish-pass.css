@@ -1,0 +1,568 @@
+/* BetterKey polish pass: intentional editorial display type + shorter mobile journey.
+   Desktop structure stays intact; mobile gets a denser, purpose-built composition. */
+
+:root {
+  --editorial: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+}
+
+/* Editorial voice: special phrases should feel authored, not outlined by a template. */
+.display em,
+.why-title em,
+.value-case h3 em,
+.anti-smart h2 em,
+.manifesto-copy i {
+  font-family: var(--editorial);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  -webkit-text-stroke: 0 !important;
+  text-rendering: optimizeLegibility;
+}
+
+.display em,
+.why-title em {
+  position: relative;
+  display: inline-block;
+  color: var(--ink) !important;
+  line-height: .84;
+  padding-right: .035em;
+}
+
+.display em {
+  font-size: 1.07em;
+}
+
+.why-title em {
+  font-size: 1.035em;
+}
+
+/* A short acid signature, rather than the generic full-outline treatment. */
+.display em::after,
+.why-title em::after {
+  content: '';
+  position: absolute;
+  right: .02em;
+  bottom: -.075em;
+  width: 30%;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--acid);
+  transform: rotate(-1.2deg) skewX(-18deg);
+}
+
+.value-case h3 em {
+  color: #6f695f;
+  line-height: .9;
+}
+
+.anti-smart h2 em {
+  color: var(--acid) !important;
+  line-height: .86;
+}
+
+.manifesto-copy i {
+  color: var(--acid);
+  line-height: .92;
+}
+
+@media (max-width: 900px) {
+  /* Keep the primary action in the header. A permanent bottom bar made the page feel like an app ad. */
+  body {
+    padding-bottom: 0 !important;
+  }
+
+  .nav {
+    padding-right: 7px;
+  }
+
+  .nav-cta {
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 13px !important;
+    justify-content: center;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+  }
+
+  /* Hero: faster arrival at the product. */
+  .hero {
+    padding-bottom: 46px;
+  }
+
+  .hero-clarity {
+    margin: 24px 0 22px;
+  }
+
+  .hero-clarity-copy p {
+    line-height: 1.5;
+  }
+
+  /* Demo: the key and deadbolt belong in one glance, not two scroll positions. */
+  .compact-demo {
+    min-height: 0 !important;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+    grid-template-areas:
+      'copy copy'
+      'key lock' !important;
+    align-items: center !important;
+    gap: 12px 14px !important;
+    padding: 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .compact-demo-copy {
+    grid-area: copy !important;
+    display: block !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  .compact-demo-copy .eyebrow {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .compact-demo-copy h3 {
+    margin: 0 !important;
+    max-width: none !important;
+    font-size: clamp(24px, 5.5vw, 31px) !important;
+    line-height: .98 !important;
+  }
+
+  .compact-demo-copy p {
+    display: none !important;
+  }
+
+  .compact-key-zone {
+    grid-area: key !important;
+    min-width: 0;
+  }
+
+  .compact-lock-zone {
+    grid-area: lock !important;
+    position: relative !important;
+    width: 100% !important;
+    min-height: 160px !important;
+    border-radius: 14px !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  .compact-key-zone .compact-object-label,
+  .compact-lock-zone .compact-object-label {
+    display: none !important;
+  }
+
+  .demo-key-hit {
+    width: min(100%, 180px) !important;
+    min-height: 0 !important;
+  }
+
+  .click-nudge {
+    margin-top: 4px !important;
+    font-size: 8px !important;
+    letter-spacing: .1em !important;
+    white-space: nowrap;
+  }
+
+  /* The real deadbolt render is the product visual. Remove the extra fake device drawing on mobile. */
+  .compact-device-shell {
+    display: none !important;
+  }
+
+  .bolt-status {
+    position: absolute !important;
+    left: 8px !important;
+    bottom: 8px !important;
+    margin: 0 !important;
+    padding: 6px 8px !important;
+    border-radius: 999px;
+    background: rgba(242, 235, 223, .9);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 3px 12px rgba(23, 23, 20, .08);
+  }
+
+  .bolt-track {
+    display: none !important;
+  }
+
+  .bolt-copy {
+    font-size: 8px !important;
+    color: var(--ink) !important;
+  }
+
+  /* Less vertical repetition. */
+  .section {
+    padding: 64px 0 !important;
+  }
+
+  .section-head {
+    margin-bottom: 30px !important;
+  }
+
+  .why-better {
+    padding: 62px 0 68px !important;
+  }
+
+  .why-intro-main > p {
+    margin-top: 18px !important;
+  }
+
+  .approach-panel {
+    margin-top: 34px !important;
+  }
+
+  .approach-message {
+    margin-top: 24px !important;
+  }
+
+  .approach-flow {
+    margin-top: 24px !important;
+  }
+
+  /* Two value propositions become a swipe row, with the next card peeking in. */
+  .value-split {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+    margin: 34px calc(50% - 50vw) 0 !important;
+    padding: 0 16px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    border: 0 !important;
+  }
+
+  .value-split::-webkit-scrollbar,
+  .pillars::-webkit-scrollbar,
+  .build-board::-webkit-scrollbar {
+    display: none;
+  }
+
+  .value-case,
+  .value-case + .value-case {
+    flex: 0 0 min(82vw, 420px) !important;
+    min-height: 300px !important;
+    scroll-snap-align: start;
+    padding: 20px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 20px;
+    background: rgba(255, 253, 248, .32);
+  }
+
+  .value-case h3 {
+    margin: 28px 0 14px !important;
+    font-size: clamp(37px, 8.5vw, 52px) !important;
+  }
+
+  .situational-note {
+    margin-top: 22px !important;
+    padding: 20px 0 !important;
+  }
+
+  .why-statement {
+    margin-top: 28px !important;
+  }
+
+  .why-statement p {
+    margin-top: 15px !important;
+  }
+
+  .anti-smart {
+    padding: 58px 0 56px !important;
+  }
+
+  .anti-smart h2 {
+    margin: 34px 0 28px !important;
+  }
+
+  .anti-smart-claims {
+    margin-bottom: 30px !important;
+  }
+
+  .anti-smart-bottom {
+    gap: 24px !important;
+    padding-top: 24px !important;
+  }
+
+  /* Three feature cards become one compact horizontal story. */
+  .pillars {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+    margin: 0 calc(50% - 50vw) !important;
+    padding: 0 16px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    border: 0 !important;
+  }
+
+  .pillar,
+  .pillar:first-child,
+  .pillar:last-child {
+    flex: 0 0 min(78vw, 360px) !important;
+    min-height: 270px !important;
+    scroll-snap-align: start;
+    padding: 18px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 20px;
+    background: rgba(255, 253, 248, .28);
+  }
+
+  .pillar-visual {
+    height: 110px !important;
+    margin: 8px 0 12px !important;
+  }
+
+  .pillar-key {
+    height: 112px !important;
+  }
+
+  .pillar-deadbolt {
+    width: 112px !important;
+    height: 112px !important;
+  }
+
+  .pillar-cloud-svg {
+    width: 122px !important;
+  }
+
+  .manifesto {
+    padding: 56px 0 !important;
+  }
+
+  .manifesto-inner {
+    gap: 18px !important;
+  }
+
+  .build-grid {
+    gap: 26px !important;
+  }
+
+  /* Build-in-public stays available, but stops costing three full phone screens. */
+  .build-board {
+    display: flex !important;
+    grid-template-columns: none !important;
+    grid-template-rows: none !important;
+    gap: 12px !important;
+    margin: 0 calc(50% - 50vw) !important;
+    padding: 0 16px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    transform: none !important;
+  }
+
+  .build-card,
+  .build-card-a,
+  .build-card-b,
+  .build-card-c {
+    flex: 0 0 min(78vw, 350px) !important;
+    width: auto !important;
+    height: 218px !important;
+    min-height: 218px !important;
+    margin: 0 !important;
+    scroll-snap-align: start;
+    border-radius: 18px !important;
+  }
+
+  .build-card-a .prototype-sketch {
+    min-height: 138px !important;
+  }
+
+  .build-card-a .sketch-device {
+    width: min(48%, 145px) !important;
+    max-width: 145px !important;
+  }
+
+  .waitlist {
+    padding: 62px 0 58px !important;
+  }
+
+  .waitlist-inner {
+    gap: 30px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav {
+    padding-right: 6px !important;
+  }
+
+  .nav-cta {
+    position: static !important;
+    width: auto !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 11px !important;
+    font-size: 11px !important;
+  }
+
+  .hero {
+    padding-bottom: 38px !important;
+  }
+
+  .hero-clarity {
+    margin: 20px 0 18px !important;
+  }
+
+  .display em::after,
+  .why-title em::after {
+    height: 2px;
+    bottom: -.065em;
+  }
+
+  .compact-demo {
+    gap: 9px 10px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+
+  .compact-demo-copy .eyebrow {
+    margin-bottom: 4px;
+    font-size: 9px;
+  }
+
+  .compact-demo-copy h3 {
+    font-size: clamp(21px, 6vw, 25px) !important;
+  }
+
+  .demo-key-hit {
+    width: min(100%, 132px) !important;
+  }
+
+  .click-nudge {
+    font-size: 7px !important;
+  }
+
+  .compact-lock-zone {
+    min-height: 136px !important;
+    border-radius: 12px !important;
+  }
+
+  .section {
+    padding: 52px 0 !important;
+  }
+
+  .section-head {
+    margin-bottom: 24px !important;
+  }
+
+  .why-better {
+    padding: 50px 0 54px !important;
+  }
+
+  .approach-panel {
+    margin-top: 28px !important;
+    padding: 18px 16px 20px !important;
+  }
+
+  .approach-message {
+    margin-top: 20px !important;
+  }
+
+  .approach-flow {
+    margin-top: 20px !important;
+  }
+
+  .value-split {
+    margin-top: 28px !important;
+    padding-inline: 15px !important;
+  }
+
+  .value-case,
+  .value-case + .value-case {
+    flex-basis: 84vw !important;
+    min-height: 270px !important;
+    padding: 18px !important;
+  }
+
+  .value-case h3 {
+    margin-top: 22px !important;
+  }
+
+  .situational-note {
+    margin-top: 16px !important;
+    padding: 18px 0 !important;
+  }
+
+  .why-statement {
+    margin-top: 22px !important;
+  }
+
+  .anti-smart {
+    padding: 50px 0 48px !important;
+  }
+
+  .anti-smart h2 {
+    margin: 28px 0 24px !important;
+  }
+
+  .anti-smart-claims {
+    margin-bottom: 24px !important;
+  }
+
+  .pillars {
+    padding-inline: 15px !important;
+  }
+
+  .pillar,
+  .pillar:first-child,
+  .pillar:last-child {
+    flex-basis: 82vw !important;
+    min-height: 245px !important;
+    padding: 16px !important;
+  }
+
+  .manifesto {
+    padding: 46px 0 !important;
+  }
+
+  .manifesto-copy {
+    font-size: clamp(38px, 10.8vw, 46px) !important;
+  }
+
+  .build-copy p {
+    margin: 16px 0 20px !important;
+  }
+
+  .build-board {
+    padding-inline: 15px !important;
+  }
+
+  .build-card,
+  .build-card-a,
+  .build-card-b,
+  .build-card-c {
+    flex-basis: 82vw !important;
+    height: 195px !important;
+    min-height: 195px !important;
+  }
+
+  .build-card-a .prototype-sketch {
+    min-height: 118px !important;
+  }
+
+  .waitlist {
+    padding: 52px 0 50px !important;
+  }
+
+  .waitlist-inner {
+    gap: 24px !important;
+  }
+
+  .footer {
+    padding-bottom: max(26px, env(safe-area-inset-bottom)) !important;
+  }
+}
