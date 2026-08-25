@@ -118,6 +118,7 @@
     margin-top: 0 !important;
     scroll-snap-type: none !important;
     scroll-behavior: auto !important;
+    touch-action: pan-y;
   }
 
   .mobile-hscene .value-case,
