@@ -1,6 +1,6 @@
 {
-  "name": "thebetterkey",
-  "short_name": "thebetterkey",
+  "name": "theBetterKey",
+  "short_name": "BetterKey",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
